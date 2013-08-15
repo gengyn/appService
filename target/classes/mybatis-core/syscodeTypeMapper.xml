@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.core.dao.SyscodeTypeDao" >
+
+  <resultMap id="syscodeTypeResult" type="syscodeType">
+    <result column="TYPE_ID" property="typeId" /> <!--  -->
+    <result column="CODE_TYPE_NAME" property="codeTypeName" /> <!--  -->
+    <result column="CODE_TYPE_VALUE" property="codeTypeValue" /> <!--  -->
+  </resultMap>
+
+  <sql id="whereClause">
+    <where>
+        <if test="typeId != null and typeId != ''">
+          and TYPE_ID = #{typeId}
+        </if>
+        <if test="codeTypeName != null and codeTypeName != ''">
+          and CODE_TYPE_NAME = #{codeTypeName}
+        </if>
+        <if test="codeTypeValue != null and codeTypeValue != ''">
+          and CODE_TYPE_VALUE = #{codeTypeValue}
+        </if>
+    </where>
+  </sql>
+
+  <select id="select" parameterType="syscodeType" resultMap="syscodeTypeResult">
+    select * from CONF_SYSCODE_TYPE
+    <include refid="whereClause"/>
+  </select>
+
+  <select id="listConfSyscodeType" parameterType="syscodeType" resultMap="syscodeTypeResult">
+    select * from CONF_SYSCODE_TYPE
+    <include refid="whereClause"/>
+  </select>
+  
+  <insert id="insert" parameterType="syscodeType">
+ 	<selectKey resultType="String" keyProperty="typeId" order="BEFORE">
+		select CONF_SYSCODE_TYPE_SEQUENCE.nextVal as typeId from dual
+	</selectKey>
+    insert into CONF_SYSCODE_TYPE (
+    <trim prefix="" prefixOverrides=",">
+        <if test="typeId != null and typeId != ''">, TYPE_ID</if>
+        <if test="codeTypeName != null and codeTypeName != ''">, CODE_TYPE_NAME</if>
+        <if test="codeTypeValue != null and codeTypeValue != ''">, CODE_TYPE_VALUE</if>
+    </trim>
+    )
+    values (
+    <trim prefix="" prefixOverrides=",">
+        <if test="typeId != null and typeId != ''"> , #{typeId}</if>
+        <if test="codeTypeName != null and codeTypeName != ''"> , #{codeTypeName}</if>
+        <if test="codeTypeValue != null and codeTypeValue != ''"> , #{codeTypeValue}</if>
+    </trim>
+    )
+  </insert>
+
+  <delete id="delete" parameterType="syscodeType">
+    delete from CONF_SYSCODE_TYPE
+    <include refid="whereClause"/>
+  </delete>
+
+  <select id="count" parameterType="syscodeType" resultType="int">
+    select count(1) from CONF_SYSCODE_TYPE
+    <include refid="whereClause"/>
+  </select>
+
+  <select id="selectByPK" resultMap="syscodeTypeResult">
+    select * from CONF_SYSCODE_TYPE
+		where TYPE_ID = #{typeId}
+  </select>
+
+  <update id="updateByPK" parameterType="syscodeType">
+    update CONF_SYSCODE_TYPE
+    <trim prefix="set" suffixOverrides=",">
+        <if test="codeTypeName != null and codeTypeName != ''">CODE_TYPE_NAME = #{codeTypeName:VARCHAR},</if>
+        <if test="codeTypeValue != null and codeTypeValue != ''">CODE_TYPE_VALUE = #{codeTypeValue:VARCHAR},</if>
+    </trim>
+		where TYPE_ID = #{typeId}
+  </update>
+
+  <delete id="deleteByPK">
+    delete from CONF_SYSCODE_TYPE
+		where TYPE_ID = #{typeId}
+  </delete>
+
+  <delete id="deleteBatch">
+    delete from CONF_SYSCODE_TYPE
+		where TYPE_ID in <foreach collection="array" item="ldjxmcIds"  open="(" separator="," close=")">#{ldjxmcIds}</foreach>
+  </delete>
+  <select id="getConfSyscodeTypeList" resultMap="syscodeTypeResult">
+    select * from CONF_SYSCODE_TYPE
+    	where TYPE_ID in <foreach collection="array" item="ldjxmcIds"  open="(" separator="," close=")">#{ldjxmcIds}</foreach>
+   </select>
+  
+</mapper>
