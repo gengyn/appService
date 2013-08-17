@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingzhou.app.client.domain.UserBase;
 import com.qingzhou.app.client.domain.LoginStatus;
 import com.qingzhou.app.client.service.LoginStatusService;
 import com.qingzhou.app.core.controller.BaseController;
@@ -16,16 +17,15 @@ import com.qingzhou.app.core.controller.BaseController;
 public class LoginStatusController extends BaseController{
 
 	private LoginStatusService loginStatusService;
-	
-	
+
 	/**
-	 * 新增客户登录信息
+	 * 新增客户登录信息,并返回获取合同信息
 	 * @param loginStatus
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody 
-	int postLoginJSON(@RequestBody LoginStatus loginStatus ) {
+	UserBase postLoginJSON(@RequestBody LoginStatus loginStatus ) {
 		
 		logger.info("新增客户登录信息"+loginStatus.getUser_name()+loginStatus.getUser_token()+loginStatus.getUser_phone());
 		loginStatusService = this.getBean("loginStatusService");

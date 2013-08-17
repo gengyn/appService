@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qingzhou.app.client.dao.LoginStatusDao;
-import com.qingzhou.app.client.domain.Aircraft;
+import com.qingzhou.app.client.domain.UserBase;
 import com.qingzhou.app.client.domain.LoginStatus;
 import com.qingzhou.core.domain.Page;
 import com.qingzhou.core.service.BaseService;
@@ -23,6 +23,7 @@ public class LoginStatusService  extends BaseService<LoginStatus> {
 		this.loginStatusDao = loginStatusDao;
 	}
 	
+
 	@Override
 	public Integer count(LoginStatus loginStatus) {
 		return loginStatusDao.countUser_token(loginStatus);
@@ -33,9 +34,19 @@ public class LoginStatusService  extends BaseService<LoginStatus> {
 		return loginStatusDao.selectByPK(loginStatus);
 	}
 	
-	public int create(LoginStatus loginStatus)
+	public UserBase create(LoginStatus loginStatus)
 	{
-		return loginStatusDao.insertLoginStatus(loginStatus);
+		
+		try
+		{
+			//暂时先不增加客户登录状态，只返回客户信息
+			//loginStatusDao.insertLoginStatus(loginStatus);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+			
+		return loginStatusDao.selectByLogin(loginStatus);
 	}
 	
 	public int modify(LoginStatus loginStatus)
