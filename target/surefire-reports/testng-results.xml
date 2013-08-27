@@ -1,0 +1,40 @@
+<testng-results>
+  <reporter-output>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="7015" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:28Z">
+    <groups>
+    </groups>
+    <test name="Command line test" duration-ms="7015" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:28Z">
+      <class name="test.ProjectPlanTest">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()" name="springTestContextBeforeTestClass" is-config="true" duration-ms="12" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:21Z">
+        </test-method>
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="6559" started-at="2013-08-27T09:32:21Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2013-08-27T09:32:28Z">
+        </test-method>
+        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="3" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        </test-method>
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void test.ProjectPlanTest.listProjectPlan()]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="listProjectPlan()" name="listProjectPlan" duration-ms="426" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        </test-method>
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)" name="springTestContextAfterTestMethod" is-config="true" duration-ms="7" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void test.ProjectPlanTest.listProjectPlan()]]>
+              </value>
+            </param>
+          </params>
+        </test-method>
+        <test-method status="PASS" signature="springTestContextAfterTestClass()" name="springTestContextAfterTestClass" is-config="true" duration-ms="0" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>

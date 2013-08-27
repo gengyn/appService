@@ -38,4 +38,5 @@
 			trim(to_char(${value}.nextval,'000000')) as NEXTVAL FROM dual
 		</if>
 	</select>
+	
 </mapper>

@@ -41,6 +41,11 @@
 			<version>5.14</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.2</version>
+		</dependency>
 		<!-- cxfWebService -->
 		<dependency>
 		  <groupId>org.apache.cxf</groupId>
