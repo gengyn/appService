@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Command line test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>1/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Aug 27 09:32:21 CST 2013</td>
+<td>Started on:</td><td>Fri Aug 30 10:34:36 CST 2013</td>
 </tr>
-<tr><td>Total time:</td><td>7 seconds (7015 ms)</td>
+<tr><td>Total time:</td><td>2 seconds (2281 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,8 +67,8 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
-<table width='100%' border='1' class='invocation-passed'>
-<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
 <td width="30%"><b>Exception</b></td>
 <td width="10%"><b>Time (seconds)</b></td>
@@ -76,9 +76,90 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='test.ProjectPlanTest.listProjectPlan()'><b>listProjectPlan</b><br>Test class: test.ProjectPlanTest</td>
-<td></td>
+<td><div><pre>org.apache.ibatis.binding.BindingException: Mapper method &apos;com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
+	at $Proxy32.getPassDay(Unknown Source)
+	at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
+	at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
+	at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(&lt;generated&gt;)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
+	at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(&lt;generated&gt;)
+	at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
+	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:155)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1911694", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1911694'><pre>org.apache.ibatis.binding.BindingException: Mapper method 'com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
+	at $Proxy32.getPassDay(Unknown Source)
+	at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
+	at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
+	at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(&lt;generated&gt;)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
+	at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(&lt;generated&gt;)
+	at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.testng.internal.MethodHelper.invokeMethod(MethodHelper.java:640)
+	at org.testng.internal.MethodHelper$1.runTestMethod(MethodHelper.java:758)
+	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:155)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.testng.internal.MethodHelper.invokeHookable(MethodHelper.java:766)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:620)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:799)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:137)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:121)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:1098)
+	at org.testng.TestRunner.privateRun(TestRunner.java:727)
+	at org.testng.TestRunner.run(TestRunner.java:581)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:315)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:310)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:272)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:221)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:40)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:83)
+	at org.testng.internal.thread.ThreadUtil$CountDownLatchedRunnable.run(ThreadUtil.java:151)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+</pre></div></td>
 <td>0</td>
-<td>test.ProjectPlanTest@1a62c31</td></tr>
+<td>test.ProjectPlanTest@1d225a7</td></tr>
 </table><p>
 </body>
 </html>

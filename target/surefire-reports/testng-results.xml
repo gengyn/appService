@@ -1,18 +1,18 @@
 <testng-results>
   <reporter-output>
   </reporter-output>
-  <suite name="Command line suite" duration-ms="7015" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:28Z">
+  <suite name="Command line suite" duration-ms="2281" started-at="2013-08-30T10:34:36Z" finished-at="2013-08-30T10:34:38Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="7015" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:28Z">
+    <test name="Command line test" duration-ms="2281" started-at="2013-08-30T10:34:36Z" finished-at="2013-08-30T10:34:38Z">
       <class name="test.ProjectPlanTest">
-        <test-method status="PASS" signature="springTestContextBeforeTestClass()" name="springTestContextBeforeTestClass" is-config="true" duration-ms="12" started-at="2013-08-27T09:32:21Z" finished-at="2013-08-27T09:32:21Z">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()" name="springTestContextBeforeTestClass" is-config="true" duration-ms="2" started-at="2013-08-30T10:34:36Z" finished-at="2013-08-30T10:34:36Z">
         </test-method>
-        <test-method status="PASS" signature="springTestContextPrepareTestInstance()" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="6559" started-at="2013-08-27T09:32:21Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="2044" started-at="2013-08-30T10:34:36Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2013-08-30T10:34:38Z">
         </test-method>
-        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="3" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="PASS" signature="setUp()" name="setUp" is-config="true" duration-ms="1" started-at="2013-08-30T10:34:38Z" finished-at="2013-08-30T10:34:38Z">
         </test-method>
-        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2013-08-30T10:34:38Z" finished-at="2013-08-30T10:34:38Z">
           <params>
             <param index="0">
               <value>
@@ -21,9 +21,70 @@
             </param>
           </params>
         </test-method>
-        <test-method status="PASS" signature="listProjectPlan()" name="listProjectPlan" duration-ms="426" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="FAIL" signature="listProjectPlan()" name="listProjectPlan" duration-ms="226" started-at="2013-08-30T10:34:38Z" finished-at="2013-08-30T10:34:38Z">
+          <exception class="org.apache.ibatis.binding.BindingException">
+            <message>
+              <![CDATA[Mapper method 'com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.apache.ibatis.binding.BindingException: Mapper method 'com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
+	at $Proxy32.getPassDay(Unknown Source)
+	at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
+	at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
+	at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
+	at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(<generated>)
+	at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.testng.internal.MethodHelper.invokeMethod(MethodHelper.java:640)
+	at org.testng.internal.MethodHelper$1.runTestMethod(MethodHelper.java:758)
+	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:155)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.testng.internal.MethodHelper.invokeHookable(MethodHelper.java:766)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:620)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:799)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1103)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:137)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:121)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:1098)
+	at org.testng.TestRunner.privateRun(TestRunner.java:727)
+	at org.testng.TestRunner.run(TestRunner.java:581)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:315)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:310)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:272)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:221)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:40)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:83)
+	at org.testng.internal.thread.ThreadUtil$CountDownLatchedRunnable.run(ThreadUtil.java:151)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+]]>
+            </full-stacktrace>
+          </exception>
         </test-method>
-        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)" name="springTestContextAfterTestMethod" is-config="true" duration-ms="7" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)" name="springTestContextAfterTestMethod" is-config="true" duration-ms="0" started-at="2013-08-30T10:34:38Z" finished-at="2013-08-30T10:34:38Z">
           <params>
             <param index="0">
               <value>
@@ -32,7 +93,7 @@
             </param>
           </params>
         </test-method>
-        <test-method status="PASS" signature="springTestContextAfterTestClass()" name="springTestContextAfterTestClass" is-config="true" duration-ms="0" started-at="2013-08-27T09:32:28Z" finished-at="2013-08-27T09:32:28Z">
+        <test-method status="PASS" signature="springTestContextAfterTestClass()" name="springTestContextAfterTestClass" is-config="true" duration-ms="1" started-at="2013-08-30T10:34:38Z" finished-at="2013-08-30T10:34:38Z">
         </test-method>
       </class>
     </test>

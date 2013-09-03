@@ -13,6 +13,7 @@ import com.qingzhou.app.client.dao.RestCommonDao;
 import com.qingzhou.app.client.dao.ProjectPlanDao;
 import com.qingzhou.app.client.domain.ProjectPlanDetail;
 import com.qingzhou.app.client.domain.ProjectPhoto;
+import com.qingzhou.app.client.domain.RestProjectPhoto;
 import com.qingzhou.app.client.domain.RestProjectPlan;
 import com.qingzhou.app.client.domain.RestProjectPlanDetail;
 import com.qingzhou.core.service.BaseService;
@@ -27,15 +28,16 @@ public class ProjectPlanService  extends BaseService {
 	private RestCommonDao restCommonDao;
 	String currDate = "";//当前日期
 	String customer_id = "";//客户号
+	String sche_id = "";
 	//工程状态
-	static String PROJECT_NORMAL = "normal"; //正常
-	static String PROJECT_DEFER = "defer";	 //延误
-	static String PROJECT_FINISH = "finish"; //竣工
-	
-	//进程状态
-	static String PROCESS_NOSTART = "0";//未开始
-	static String PROCESS_GOING = "1";//进行中	
-	static String PROCESS_END = "2"; //完工
+	static int PROJECT_NORMAL = 0x11; //正常
+	static int PROJECT_DEFER = 0x12;	 //延误
+	static int PROJECT_FINISH = 0x13; //竣工
+		
+		//进程状态W
+	static int PROCESS_NOSTART = 0x21;//未开始
+	static int PROCESS_GOING = 0x22;//进行中	
+	static int PROCESS_END = 0x23; //完工
 
 	public void setProjectPlanDao(ProjectPlanDao projectPlanDao) {
 		this.projectPlanDao = projectPlanDao;
@@ -62,14 +64,15 @@ public class ProjectPlanService  extends BaseService {
 		projectPlanDetail.setProject_process_level("1");
 		//第一级
 		List<ProjectPlanDetail> level1List = projectPlanDao.listProjectPlan(projectPlanDetail);
-		projectPlanDetail.setProject_process_level("2");
 		//第二级
+		projectPlanDetail.setProject_process_level("2");
 		List<ProjectPlanDetail> level2List = projectPlanDao.listProjectPlan(projectPlanDetail);
 		//获取工程当前阶段
 		ProjectPlanDetail cur_ppd = getCurrPlan(level1List);
 		//进程列表
 		List<RestProjectPlanDetail> restProjectPlanDetail = new ArrayList<RestProjectPlanDetail>();
 		projectPlan.setProjectPlanDetailList(restProjectPlanDetail);
+		
 		if (cur_ppd == null)
 		{
 			projectPlan.setCurrPlanName("已竣工");
@@ -90,6 +93,7 @@ public class ProjectPlanService  extends BaseService {
 			rppd.setSche_start_project(level1ppd.getSche_start_project());
 			rppd.setSche_end_project(level1ppd.getSche_end_project());
 			rppd.setPhotocount(level1ppd.getPhotocount());
+			sche_id = level1ppd.getSche_id();
 			if (cur_ppd == null || !LogicUtils.isEmpty(level1ppd.getSchedetail_flag()))
 				rppd.setProject_process_status(this.PROCESS_END);
 			else if (level1ppd.getSchedetail_id().equals(cur_ppd.getSchedetail_id()))
@@ -100,8 +104,6 @@ public class ProjectPlanService  extends BaseService {
 			Iterator<ProjectPlanDetail> level2Iterator = level2List.listIterator();
 			while(level2Iterator.hasNext())
 			{
-				
-												
 				ProjectPlanDetail level2ppd = level2Iterator.next();
 				
 				if (level2ppd.getProject_process_parent_id() != null && 
@@ -126,6 +128,7 @@ public class ProjectPlanService  extends BaseService {
 			
 			rppd.setRestProjectPlanDetailList(subList);
 			restProjectPlanDetail.add(rppd);
+			projectPlan.setSche_id(sche_id);
 		}
 	
 		return projectPlan;
@@ -142,6 +145,7 @@ public class ProjectPlanService  extends BaseService {
 		for(int i=0;i<ppdList.size();i++)
 		{
 			ProjectPlanDetail ppd = ppdList.get(i);
+			
 			if (LogicUtils.isEmpty(ppd.getSchedetail_flag()))
 			{
 				if (ppd.getProject_process_level().equals("1"))
@@ -159,22 +163,50 @@ public class ProjectPlanService  extends BaseService {
 	 * @param currDate
 	 * @return
 	 */
-	private String getPlanStatus(ProjectPlanDetail ppd)
+	private int getPlanStatus(ProjectPlanDetail ppd)
 	{
-		String planStatus = "";
+		int planStatus = this.PROJECT_DEFER;
 		ProjectPlanDetail projectPlanDetail = new ProjectPlanDetail();
 		projectPlanDetail.setCustomer_id(customer_id);
 		projectPlanDetail.setCurr_date(currDate);
+		projectPlanDetail.setSche_id(ppd.getSche_id());
 		projectPlanDetail.setProject_process_level("1");
+		
+		System.err.println("ppppp"+ppd.getSche_id());
+		
+		int days = projectPlanDao.getPassDay(projectPlanDetail);
+		if (days > 0) return this.PROJECT_DEFER;
+		days = projectPlanDao.getLeadDay(projectPlanDetail);
+		if (days > 0) return this.PROJECT_NORMAL;
+		
+		
 		List<ProjectPlanDetail> ppdList = projectPlanDao.listProjectPlan(projectPlanDetail);
 		
-		ProjectPlanDetail temp = ppdList.get(0);
-		//当实际进度>=计划进度    为正常，否则为延期
-		if (Integer.parseInt(temp.getProject_process_order()) <= Integer.parseInt(ppd.getProject_process_order()))
-			planStatus = this.PROJECT_NORMAL;
-		else planStatus = this.PROJECT_DEFER;
+		if (ppdList.size()>0)
+		{
+			ProjectPlanDetail temp = ppdList.get(0);
+			//当实际进度>=计划进度    为正常，否则为延期
+			if (Integer.parseInt(temp.getProject_process_order()) <= Integer.parseInt(ppd.getProject_process_order()))
+				planStatus = this.PROJECT_NORMAL;
+			else planStatus = this.PROJECT_DEFER;
+		}
 		
 		return planStatus;
+	}
+	
+	/**
+	 * 返回照片列表
+	 * @param schedetail_id
+	 * @param sche_id
+	 * @return
+	 */
+	public List<RestProjectPhoto> getPhoto(String schedetail_id,String sche_id)
+	{
+		ProjectPhoto projectPhoto = new ProjectPhoto();
+		projectPhoto.setSche_detail_id(schedetail_id);
+		projectPhoto.setSche_id(sche_id);
+		
+		return projectPlanDao.listPhoto(projectPhoto);
 	}
 	
 	

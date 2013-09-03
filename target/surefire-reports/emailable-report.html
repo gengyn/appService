@@ -29,15 +29,41 @@ div.shootout {padding:2em;border:3px #4854A8 solid}
 <body>
 <table cellspacing=0 cellpadding=0 class="param">
 <tr><th>Test</th><th class="numi">Methods<br/>Passed</th><th class="numi">Scenarios<br/>Passed</th><th class="numi"># skipped</th><th class="numi"># failed</th><th class="numi">Total<br/>Time</th><th class="numi">Included<br/>Groups</th><th class="numi">Excluded<br/>Groups</th></tr>
-<tr><td style="text-align:left;padding-right:2em">Command line test</td><td class="numi">1</td><td class="numi">1</td><td class="numi">0</td><td class="numi">0</td><td class="numi">7.0 seconds</td><td class="numi"></td><td class="numi"></td></tr>
+<tr><td style="text-align:left;padding-right:2em">Command line test</td><td class="numi">0</td><td class="numi">0</td><td class="numi">0</td><td class="numi_attn">1</td><td class="numi">2.3 seconds</td><td class="numi"></td><td class="numi"></td></tr>
 </table>
 <a id="summary"></a>
 <table cellspacing=0 cellpadding=0 class="passed">
 <tr><th>Class</th><th>Method</th><th># of<br/>Scenarios</th><th>Time<br/>(Msecs)</th></tr>
-<tr><th colspan="4">Command line test &#8212; passed</th></tr>
-<tr class="passedodd"><td rowspan="1">test.ProjectPlanTest<td><a href="#m1"><b>listProjectPlan</b>  </a></td><td class="numi">1</td><td class="numi">426</td></tr>
+<tr><th colspan="4">Command line test &#8212; failed</th></tr>
+<tr class="failedodd"><td rowspan="1">test.ProjectPlanTest<td><a href="#m1"><b>listProjectPlan</b>  </a></td><td class="numi">1</td><td class="numi">226</td></tr>
 </table>
 <h1>Command line test</h1>
 <a id="m1"></a><h2>test.ProjectPlanTest:listProjectPlan</h2>
+<div style="padding-left:3em">
+<p>Mapper method &apos;com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).</p>
+org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
+<br/>at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
+<br/>at $Proxy32.getPassDay(Unknown Source)
+<br/>at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
+<br/>at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
+<br/>at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(&lt;generated&gt;)
+<br/>at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+<br/>at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
+<br/>at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+<br/>at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+<br/>at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+<br/>at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+<br/>at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+<br/>at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+<br/>at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+<br/>at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+<br/>at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+<br/>at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
+<br/>at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+<br/>at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
+<br/>at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(&lt;generated&gt;)
+<br/>at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
+<br/>31 lines not shown
+</div>
 <p class="totop"><a href="#summary">back to summary</a></p>
 </body></html>

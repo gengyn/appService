@@ -10,7 +10,7 @@ public class RestProjectPlanDetail {
 	private String sche_end_project;	//	完成时间
 	private String project_process_id;	//	进程ID
 	private String project_process_name;	//	进程名称
-	private String project_process_status;//进程状态 0未开始  1进行中 2完工
+	private int project_process_status;//进程状态 nostart未开始  going进行中 end完工
 	private int photocount;	//	照片数量
 	
 	private List<RestProjectPlanDetail> restProjectPlanDetailList;
@@ -53,10 +53,10 @@ public class RestProjectPlanDetail {
 		this.project_process_name = project_process_name;
 	}
 
-	public String getProject_process_status() {
+	public int getProject_process_status() {
 		return project_process_status;
 	}
-	public void setProject_process_status(String project_process_status) {
+	public void setProject_process_status(int project_process_status) {
 		this.project_process_status = project_process_status;
 	}
 	public int getPhotocount() {

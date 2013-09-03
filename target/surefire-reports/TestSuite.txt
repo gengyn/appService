@@ -1,4 +1,29 @@
 -------------------------------------------------------------------------------
 Test set: TestSuite
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.284 sec
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.668 sec <<< FAILURE!
+listProjectPlan(test.ProjectPlanTest)  Time elapsed: 0.228 sec  <<< FAILURE!
+org.apache.ibatis.binding.BindingException: Mapper method 'com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
+	at $Proxy32.getPassDay(Unknown Source)
+	at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
+	at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
+	at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
+	at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(<generated>)
+	at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
+
