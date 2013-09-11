@@ -10,7 +10,14 @@ public class Version {
 	private String 	file_name;
 	private String 	os_type;
 	private String 	ver_type;
+	private String  forceupdate;
 	
+	public String getForceupdate() {
+		return forceupdate;
+	}
+	public void setForceupdate(String forceupdate) {
+		this.forceupdate = forceupdate;
+	}
 	public String getOs_type() {
 		return os_type;
 	}

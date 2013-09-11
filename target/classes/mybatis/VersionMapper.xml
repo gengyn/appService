@@ -12,7 +12,8 @@
        			file_size,
        			file_name,
        			os_type,
-       			ver_type
+       			ver_type,
+       			forceupdate
   		from t_app_version
  		where os_type = #{os_type} and ver_type = #{ver_type}
  		order by ver_date desc
@@ -27,7 +28,8 @@
        			file_size,
        			file_name,
        			os_type,
-       			ver_type
+       			ver_type,
+       			forceupdate
   		from t_app_version 
 		<where>
 			<if test="ver_name != null and ver_name != ''">
