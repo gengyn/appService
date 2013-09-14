@@ -16,7 +16,8 @@
 	           and para_code = t.info_type) as info_type,
 	       info_content,
 	       info_url,
-	       to_char(create_time, 'YYYY-MM-DD') as info_date
+	       to_char(create_time, 'YYYY-MM-DD') as info_date,
+	       (DECODE(to_char(sysdate,'YYYYMMDD'),to_char(create_time, 'YYYYMMDD'),1,0)) as today_flag
 	  	from t_app_myinfo t
 	 	where t.is_open = '0'
 	 	order by create_time desc

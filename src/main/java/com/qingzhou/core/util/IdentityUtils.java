@@ -35,4 +35,15 @@ public final class IdentityUtils {
 		}
 		return Long.toString(result);
 	}
+	
+	public static final int MAX = Integer.MAX_VALUE;
+	public static final int MIN = MAX/2;
+	
+	public static int getRandomSendNo() {
+	    return (int) (MIN + Math.random() * (MAX - MIN));
+	}
+	
+	public static void main(String a[]) {
+		logger.debug(getRandomSendNo());
+	}
 }

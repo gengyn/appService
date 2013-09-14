@@ -9,7 +9,14 @@ public class Myinfo {
 	private String info_type;//资讯类型
 	private String info_url;//资讯地址
 	private String info_date;//资讯添加时间
+	private int today_flag = 0;//是否今日标识，如为0不是，为1是
 	
+	public int getToday_flag() {
+		return today_flag;
+	}
+	public void setToday_flag(int today_flag) {
+		this.today_flag = today_flag;
+	}
 	public String getInfo_id() {
 		return info_id;
 	}
