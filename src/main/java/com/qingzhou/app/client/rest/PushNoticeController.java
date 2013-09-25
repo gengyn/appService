@@ -23,7 +23,6 @@ import com.qingzhou.core.util.PushUtils;
 @RequestMapping("/service/push/notice")
 public class PushNoticeController extends BaseController{
 
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody 
 	MessageResult sendNotice(@RequestBody Notice notice) {
@@ -47,8 +46,9 @@ public class PushNoticeController extends BaseController{
 				noticeContent = "资讯更新了"+notice.getCounts()+"条，查看详情";
 				break;
 			case PushCommon.CLIENT_MYMESSAGE:
+				
 				noticeTitle = "我的消息";
-				noticeContent = "新收到了"+notice.getMsg_sendername()+"的"+notice.getCounts()+"条消息，查看详情";
+				noticeContent = "新收到了"+notice.getMsg_sendername()+"发送的"+notice.getCounts()+"条消息，查看详情";
 				break;
 			default:
 				noticeTitle = notice.getNotice_title();

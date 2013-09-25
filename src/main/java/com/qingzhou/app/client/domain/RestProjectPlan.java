@@ -6,11 +6,19 @@ import java.util.List;
 public class RestProjectPlan {
 
 	private String currPlanName;//当前进度名称
+	private int currID;//当前进度序号
 	private int planStatus;//工程状态，normal正常  defer延期  finish竣工 
 	private String sche_id;//工程ID
-	
+
 	private List<RestProjectPlanDetail> projectPlanDetailList; //项目明细
 
+	public int getCurrID() {
+		return currID;
+	}
+
+	public void setCurrID(int currID) {
+		this.currID = currID;
+	}
 	public String getSche_id() {
 		return sche_id;
 	}

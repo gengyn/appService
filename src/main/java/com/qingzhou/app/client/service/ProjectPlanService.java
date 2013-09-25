@@ -68,19 +68,22 @@ public class ProjectPlanService  extends BaseService {
 		projectPlanDetail.setProject_process_level("2");
 		List<ProjectPlanDetail> level2List = projectPlanDao.listProjectPlan(projectPlanDetail);
 		//获取工程当前阶段
-		ProjectPlanDetail cur_ppd = getCurrPlan(level1List);
+		//ProjectPlanDetail cur_ppd = getCurrPlan(level1List);
+		int currID = getCurrPlanID(level1List);
 		//进程列表
 		List<RestProjectPlanDetail> restProjectPlanDetail = new ArrayList<RestProjectPlanDetail>();
 		projectPlan.setProjectPlanDetailList(restProjectPlanDetail);
 		
-		if (cur_ppd == null)
+		if (currID == -1)
 		{
+			projectPlan.setCurrID(level2List.size()-1);
 			projectPlan.setCurrPlanName("已竣工");
 			projectPlan.setPlanStatus(this.PROJECT_FINISH);
 		}else
 		{
-			projectPlan.setCurrPlanName(cur_ppd.getProject_process_name());
-			projectPlan.setPlanStatus(getPlanStatus(cur_ppd));
+			projectPlan.setCurrID(currID);
+			projectPlan.setCurrPlanName(level1List.get(currID).getProject_process_name());
+			projectPlan.setPlanStatus(getPlanStatus(level1List.get(currID)));
 		}
 		
 		for(ProjectPlanDetail level1ppd:level1List)
@@ -94,9 +97,9 @@ public class ProjectPlanService  extends BaseService {
 			rppd.setSche_end_project(level1ppd.getSche_end_project());
 			rppd.setPhotocount(level1ppd.getPhotocount());
 			sche_id = level1ppd.getSche_id();
-			if (cur_ppd == null || !LogicUtils.isEmpty(level1ppd.getSchedetail_flag()))
+			if (currID == -1 || !LogicUtils.isEmpty(level1ppd.getSchedetail_flag()))
 				rppd.setProject_process_status(this.PROCESS_END);
-			else if (level1ppd.getSchedetail_id().equals(cur_ppd.getSchedetail_id()))
+			else if (level1ppd.getSchedetail_id().equals(level1List.get(currID).getSchedetail_id()))
 				rppd.setProject_process_status(this.PROCESS_GOING);
 			else rppd.setProject_process_status(this.PROCESS_NOSTART);
 			
@@ -159,6 +162,30 @@ public class ProjectPlanService  extends BaseService {
 	}
 	
 	/**
+	 * 获取工程当前阶段ID
+	 * @param ppdList
+	 * @return
+	 */
+	private int getCurrPlanID(List<ProjectPlanDetail> ppdList)
+	{
+		int id = -1;
+		for(int i=0;i<ppdList.size();i++)
+		{
+			ProjectPlanDetail ppd = ppdList.get(i);
+			
+			if (LogicUtils.isEmpty(ppd.getSchedetail_flag()))
+			{
+				if (ppd.getProject_process_level().equals("1"))
+				{
+					id = i;
+					break;
+				}
+			}
+		}
+		return id;
+	}
+	
+	/**
 	 * 判断工程是否延期
 	 * @param currDate
 	 * @return
@@ -171,8 +198,6 @@ public class ProjectPlanService  extends BaseService {
 		projectPlanDetail.setCurr_date(currDate);
 		projectPlanDetail.setSche_id(ppd.getSche_id());
 		projectPlanDetail.setProject_process_level("1");
-		
-		System.err.println("ppppp"+ppd.getSche_id());
 		
 		int days = projectPlanDao.getPassDay(projectPlanDetail);
 		if (days > 0) return this.PROJECT_DEFER;

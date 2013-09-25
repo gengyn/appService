@@ -134,6 +134,37 @@ public class PushUtils {
 		handleResult(result);
 		return result;
 	}
+	
+	/**
+	 * 发送即时消息
+	 * @param alias
+	 * @param msgContent
+	 * @param extra
+	 * @return
+	 */
+	public static MessageResult sendMsgWithAlias(String alias,String msgContent,Map<String,Object> extra)
+	{
+		MessageResult result = jpush.sendCustomMessageWithAlias(
+				IdentityUtils.getRandomSendNo(), alias, null, msgContent, null, extra);
+		handleResult(result);
+		return result;
+	}
+	
+	/**
+	 * 发送即时消息，ID外部生成
+	 * @param id
+	 * @param alias
+	 * @param msgContent
+	 * @param extra
+	 * @return
+	 */
+	public static MessageResult sendMsgWithAlias(int id,String alias,String msgContent,Map<String,Object> extra)
+	{
+		MessageResult result = jpush.sendCustomMessageWithAlias(
+				id, alias, null, msgContent, null, extra);
+		handleResult(result);
+		return result;
+	}
 
 	/**
 	 * 消息返回处理

@@ -3,7 +3,7 @@ package com.qingzhou.app.client.domain;
 public class Notice {
 
 		
-	private int target_flag = 0;//目标标识，是客户版还是员工版
+	private int target_flag = 0;//目标标识，发送给客户还是员工,0为客户
 	private String alias;//别名
 	private String tag;//分组
 	private int notice_type;//通知分类

@@ -9,8 +9,6 @@ public class PushCommon {
 	
 	//客户版
 	public final static int CLIENT_FLAG = 0;
-//	public final static String CLIENT_AppKey = "510d191e84659ead7413fce8";      
-//	public final static String CLIENT_API_MasterSecret = "2662f7ff7102b816cc5ddc19";
 	public final static String CLIENT_AppKey = "7fb50bbcb9d18e80b9e09d41";      
 	public final static String CLIENT_API_MasterSecret = "f191b2631801fdaf876f0d19";
 	public final static int CLIENT_timeToLive =  60 * 60 * 24;       //保存离线的时长，默认为1天
@@ -24,8 +22,8 @@ public class PushCommon {
 	
 	//员工版
 	public final static int EMPLOYEE_FLAG = 1;
-	public final static String EMPLOYEE_AppKey = "";      
-	public final static String EMPLOYEE_API_MasterSecret = "";
+	public final static String EMPLOYEE_AppKey = "1062cca4160f04c4523b695e";      
+	public final static String EMPLOYEE_API_MasterSecret = "cbc9c57d1e420fe22990feee";
 	public final static int EMPLOYEE_timeToLive =  60 * 60 * 24;
 	
 	
