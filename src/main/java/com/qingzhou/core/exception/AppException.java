@@ -74,18 +74,18 @@ public class AppException extends RuntimeException {
 		this.message = message;
 	}
 
-	private AppException(String code, String message) {
+	public AppException(String code, String message) {
 		super(message);
 		this.code = code;
 		this.message = message;
 	}
 
-	private AppException(String message) {
-		super(message);
-		this.message = message;
+	public AppException(String code) {
+		super(code);
+		this.code = code;
 	}
-
-	private AppException(Exception ex) {
+	
+	public AppException(Exception ex) {
 		super(ex);
 	}
 }

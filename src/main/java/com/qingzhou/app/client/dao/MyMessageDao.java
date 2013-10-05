@@ -15,6 +15,6 @@ public interface MyMessageDao {
 	
 	public Integer updateMessage(MyMessage message);
 	
-	public Integer deleteMessageByDate(String dateCondition);
+	public Integer deleteMessageByDate(int dateCondition);
 
 }

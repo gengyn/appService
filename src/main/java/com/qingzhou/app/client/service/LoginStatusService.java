@@ -1,8 +1,6 @@
 package com.qingzhou.app.client.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.qingzhou.app.client.dao.LoginStatusDao;
 import com.qingzhou.app.client.domain.UserBase;
 import com.qingzhou.app.client.domain.LoginStatus;
-import com.qingzhou.core.domain.Page;
 import com.qingzhou.core.service.BaseService;
 
 @Service
@@ -24,28 +21,16 @@ public class LoginStatusService  extends BaseService<LoginStatus> {
 	}
 	
 
-	@Override
-	public Integer count(LoginStatus loginStatus) {
-		return loginStatusDao.countUser_token(loginStatus);
-	}
-
-	public LoginStatus queryByPK(LoginStatus loginStatus)
+	public LoginStatus queryByPK(String user_token)
 	{
-		return loginStatusDao.selectByPK(loginStatus);
+		return loginStatusDao.selectByPK(user_token);
 	}
 	
 	public UserBase create(LoginStatus loginStatus)
 	{
 		
-		try
-		{
-			//暂时先不增加客户登录状态，只返回客户信息
-			//loginStatusDao.insertLoginStatus(loginStatus);
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-			
+		//新增客户登录状态
+		loginStatusDao.insertLoginStatus(loginStatus);
 		return loginStatusDao.selectByLogin(loginStatus);
 	}
 	
@@ -56,11 +41,23 @@ public class LoginStatusService  extends BaseService<LoginStatus> {
 	
 	public int deleteByPKs(LoginStatus loginStatus)
 	{
-		return loginStatusDao.deleteLoginStatus(loginStatus);
+		return loginStatusDao.deleteLoginStatus(loginStatus.getUser_token());
+	}
+	
+	public int deleteLoginStatusByTime(double dateCondition)
+	{
+		return loginStatusDao.deleteLoginStatusByTime(dateCondition);
 	}
 
 	@Override
 	public List<LoginStatus> select(LoginStatus entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Integer count(LoginStatus entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

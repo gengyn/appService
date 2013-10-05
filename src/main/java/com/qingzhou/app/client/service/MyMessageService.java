@@ -37,7 +37,7 @@ public class MyMessageService  extends BaseService<MyMessage> {
 		return myMessageDao.updateMessage(message);
 	}
 	
-	public int deleteMessageByDate(String dateCondition)
+	public int deleteMessageByDate(int dateCondition)
 	{
 		return myMessageDao.deleteMessageByDate(dateCondition);
 	}

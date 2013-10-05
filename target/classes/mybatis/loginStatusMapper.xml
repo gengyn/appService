@@ -34,30 +34,15 @@
    and t2.REG_FIRST_MOBILEPHONE = #{user_phone}
     </select>
 	<!-- 查询客户登录 -->
-      <select id="selectByPk" parameterType="map" resultType="loginStatus">
+     <select id="selectByPK" resultType="loginStatus">
 		select user_token, user_name, user_phone, login_time, last_time from t_app_loginstatus 
-		<where>
-			<if test="user_token != null and user_token != ''">
-					 and user_token=#{user_token} 
-			</if>
-		</where>
+		where user_token=#{value} 
     </select>
-    
-    <!-- 客户登录记录数 -->
-     <select id="countUser_token" resultType="int" parameterType="map">
-			select count(user_token) as sumsize 
-		 	   from t_app_loginstatus 
-			<where>
-				<if test="user_token != null and user_token != ''">
-					 and user_token=#{user_token} 
-				</if>
-				<if test="user_name != null and user_name != ''">
-					 and user_name=#{user_name} 
-				</if>
-				<if test="user_phone != null and user_phone != ''">
-					 and user_phone=#{user_phone} 
-				</if>
-			</where>
+	<!-- 客户登录记录数 -->
+	 <select id="countUser_token" resultType="int" >
+		select count(user_token) as sumsize 
+	 	   from t_app_loginstatus 
+		where user_token=#{value} 
 	</select>
     <!-- 新增客户登录信息 -->	
     <insert id="insertLoginStatus" parameterType="map">
@@ -72,7 +57,11 @@
 		WHERE user_token=#{user_token}
 	</update>
 	<!-- 删除客户登录信息 -->	
-	<delete id="deleteLoginStatus" >
-			DELETE FROM t_app_loginstatus WHERE user_token =  #{user_token}
+	<delete id="deleteLoginStatus" parameterType="string">
+		DELETE FROM t_app_loginstatus WHERE user_token = #{value}
+	</delete>
+	<!-- 通过最后修改时间删除登录状态 -->
+	<delete id="deleteLoginStatusByTime" >
+		DELETE FROM t_app_loginstatus WHERE last_time &lt; sysdate - #{value}
 	</delete>
 </mapper>

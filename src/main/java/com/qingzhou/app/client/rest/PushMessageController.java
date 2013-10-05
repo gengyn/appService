@@ -63,7 +63,7 @@ public class PushMessageController extends BaseController{
 	
 	@RequestMapping(value = "/{mobile}", method = RequestMethod.GET)
 	public @ResponseBody
-	String getMyMessageJSON(@PathVariable String mobile) {
+	String getReMessageJSON(@PathVariable String mobile) {
 		
 		logger.info("根据客户手机号触发消息重发，这时客户为消息接收者，mobile=" + mobile);
 		

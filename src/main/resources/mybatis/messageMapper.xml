@@ -80,9 +80,10 @@
 	</update>
 	<!-- 删除某个时间端的message -->	
 	<delete id="deleteMessageByDate">
-	<![CDATA[
-			DELETE FROM t_app_mymessage WHERE send_time <
-	]]>
-	 to_date(#{value},'YYYY-MM-DD') 
+	 DELETE FROM t_app_mymessage WHERE send_time &lt; sysdate - #{value}
+	 <![CDATA[ 
+
+	 ]]>
+	 
 	</delete>
 </mapper>

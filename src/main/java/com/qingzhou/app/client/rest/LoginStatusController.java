@@ -19,7 +19,7 @@ public class LoginStatusController extends BaseController{
 	private LoginStatusService loginStatusService;
 
 	/**
-	 * 新增客户登录信息,并返回获取合同信息
+	 * 新增客户登录信息,并返回获取客户基本信息
 	 * @param loginStatus
 	 * @return
 	 */
@@ -40,11 +40,11 @@ public class LoginStatusController extends BaseController{
 	 */
 	@RequestMapping(method = RequestMethod.PUT)
 	public @ResponseBody
-	int putLoginJSON(@RequestBody LoginStatus loginStatus) {
+	String putLoginJSON(@RequestBody LoginStatus loginStatus) {
 		
 		logger.info("更新最新操作时间" + loginStatus.getUser_token());
 		loginStatusService = this.getBean("loginStatusService");
-		return loginStatusService.modify(loginStatus);
+		return loginStatusService.modify(loginStatus)+"";
 
 	}
 	/**
@@ -54,13 +54,13 @@ public class LoginStatusController extends BaseController{
 	 */
 	@RequestMapping(value= "/{user_token}",method = RequestMethod.DELETE)
 	public @ResponseBody
-	int delLoginJSON(@PathVariable String user_token) {
+	String delLoginJSON(@PathVariable String user_token) {
 		
 		LoginStatus loginStatus = new LoginStatus();
 		loginStatus.setUser_token(user_token);
 		logger.info("删除客户登录信息" + loginStatus.getUser_token() );
 		loginStatusService = this.getBean("loginStatusService");
-		return loginStatusService.deleteByPKs(loginStatus);
+		return loginStatusService.deleteByPKs(loginStatus)+"";
 
 	}
 

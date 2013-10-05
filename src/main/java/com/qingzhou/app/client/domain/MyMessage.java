@@ -1,6 +1,7 @@
 package com.qingzhou.app.client.domain;
 
 public class MyMessage {
+	private String user_token;
 	private int message_id;
 	private String sender;
 	private String receiver;
@@ -14,6 +15,12 @@ public class MyMessage {
 	private int target_flag = 0;//目标标识，发送给客户还是员工,0为客户
 	private String issucceed;//0为成功，1为失败
 	
+	public String getUser_token() {
+		return user_token;
+	}
+	public void setUser_token(String user_token) {
+		this.user_token = user_token;
+	}
 	public String getIssucceed() {
 		return issucceed;
 	}

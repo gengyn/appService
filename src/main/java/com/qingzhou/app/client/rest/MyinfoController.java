@@ -21,9 +21,13 @@ public class MyinfoController extends BaseController{
 	private MyinfoService myinfoService;
 	
 	
-	@RequestMapping(value = "/{customer_id}/{pageno}/{pagesize}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{user_token}/{customer_id}/{pageno}/{pagesize}", method = RequestMethod.GET)
 	public @ResponseBody
-	List<Myinfo> getMyInfoListJSON(@PathVariable String customer_id,@PathVariable String pageno,@PathVariable String pagesize) {
+	List<Myinfo> getMyInfoListJSON(
+			@PathVariable String user_token,
+			@PathVariable String customer_id,
+			@PathVariable String pageno,
+			@PathVariable String pagesize) {
 		
 		logger.info("根据客户ID获取资讯信息，customer_id=" + customer_id);
 		

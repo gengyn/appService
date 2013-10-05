@@ -25,9 +25,9 @@ public class ContractController extends BaseController{
 	 * @param reg_phone
 	 * @return
 	 */
-	@RequestMapping(value = "/{contract_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{user_token}/{contract_id}", method = RequestMethod.GET)
 	public @ResponseBody
-	Contract getContractByIDJSON(@PathVariable String contract_id) {
+	Contract getContractByIDJSON(@PathVariable String user_token,@PathVariable String contract_id) {
 		
 		logger.info("根据合同ID获取客户及合同信息，contract_id=" + contract_id);
 		

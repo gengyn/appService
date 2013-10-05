@@ -13,7 +13,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingzhou.core.exception.AppException;
 import com.qingzhou.core.util.FormUtils;
 import com.qingzhou.core.util.ServletUtils;
 import com.qingzhou.core.util.SpringContextHolder;
@@ -31,6 +34,24 @@ public abstract class BaseController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * 异常的统一处理，默认返回9999
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler(value = {Exception.class})  
+    public @ResponseBody String setException(Exception ex, HttpServletRequest request) {
+		logger.error("服务发生异常", ex);
+        return "9999";  
+    }
+	
+	@ExceptionHandler(value = {AppException.class})  
+    public @ResponseBody String setAppException(AppException ex, HttpServletRequest request) {
+		logger.error("服务发生异常", ex);
+        return ex.getCode();  
+    }
+	
 	/**
 	 * 根据类来获取相应的spring bean实例,例如：this.getBean(UserService.class)
 	 * 

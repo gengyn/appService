@@ -22,9 +22,9 @@ public class ProjectPlanController extends BaseController{
 	private ProjectPlanService projectPlanService;
 	
 	
-	@RequestMapping(value = "/{customer_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{usertoken}/{customer_id}", method = RequestMethod.GET)
 	public @ResponseBody
-	RestProjectPlan getProjectPhanByIDJSON(@PathVariable String customer_id) {
+	RestProjectPlan getProjectPhanByIDJSON(@PathVariable String usertoken,@PathVariable String customer_id) {
 		
 		logger.info("根据客户ID获取工程进度信息，customer_id=" + customer_id);
 		
@@ -33,9 +33,9 @@ public class ProjectPlanController extends BaseController{
 		return projectPlan;
 	}
 	
-	@RequestMapping(value = "/photo/{schedetail_id}/{sche_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/photo/{usertoken}/{schedetail_id}/{sche_id}", method = RequestMethod.GET)
 	public @ResponseBody
-	List<RestProjectPhoto> getProjectPhotoByIDJSON(@PathVariable String schedetail_id,@PathVariable String sche_id) {
+	List<RestProjectPhoto> getProjectPhotoByIDJSON(@PathVariable String usertoken,@PathVariable String schedetail_id,@PathVariable String sche_id) {
 		
 		logger.info("根据进度ID获取图片");
 		
