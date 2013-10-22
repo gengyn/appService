@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.app.client.dao.MyMessageDao">
+    <!-- 查询消息列表 -->
+    <select id="listMessage" resultType="MyMessage" parameterType="map">
+      	select message_id,
+	       sender,
+	       receiver,
+	       message_type,
+	       message_title,
+	       message_content,
+	       send_time,
+	       last_send_time,
+	       img_url,
+	       voice_url,
+	       issucceed,
+	       target_flag
+  		from t_app_mymessage
+       	<where>
+			<if test="issucceed != null and issucceed != ''">
+				 and issucceed=#{issucceed} 
+			</if>
+			<if test="receiver != null and receiver != ''">
+				 and receiver=#{receiver} 
+			</if>
+			<if test="send_time != null and send_time != ''">
+				 and send_time=#{send_time} 
+			</if>
+		</where>
+    </select>	
+    <!-- 新增消息记录 -->	
+    <insert id="insertMessage" parameterType="map">
+		insert into t_app_mymessage
+		 (
+		<trim prefix="" prefixOverrides=",">
+			<if test="message_id != null">,message_id</if>
+			<if test="sender != null">,sender</if>
+			<if test="receiver != null">,receiver</if>
+			<if test="message_type != null">,message_type</if>
+			<if test="message_title != null">,message_title</if>
+			<if test="message_content != null">,message_content</if>
+			<if test="img_url != null">,img_url</if>
+			<if test="voice_url != null">,voice_url</if>
+			<if test="issucceed != null">,issucceed</if>
+			<if test="target_flag != null">,target_flag</if>
+			
+		</trim>
+		)
+		VALUES
+		(
+		<trim prefix="" prefixOverrides=",">
+			<if test="message_id != null">,#{message_id}</if>
+			<if test="sender != null">,#{sender}</if>
+			<if test="receiver != null">,#{receiver}</if>
+			<if test="message_type != null">,#{message_type}</if>
+			<if test="message_title != null">,#{message_title}</if>
+			
+			<if test="message_content != null">,#{message_content}</if>
+			<if test="img_url != null">,#{img_url}</if>
+			<if test="voice_url != null">,#{voice_url}</if>
+			<if test="issucceed != null">,#{issucceed}</if>	
+			<if test="target_flag != null">,#{target_flag}</if>				 		
+		</trim>
+		)
+	</insert>
+    <!-- 更新消息信息 -->	
+	<update id="updateMessage" parameterType="map" >
+		UPDATE t_app_mymessage 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="issucceed != null">issucceed=#{issucceed},</if>
+			<if test="last_send_time != null">last_send_time=SYSDATE,</if>
+		</trim>
+		<where>
+			<if test="message_id != null and message_id != ''">
+				 and message_id=#{message_id} 
+			</if>
+		</where>
+	</update>
+	<!-- 删除某个时间端的message -->	
+	<delete id="deleteMessageByDate">
+	 DELETE FROM t_app_mymessage WHERE send_time &lt; sysdate - #{value}
+	 <![CDATA[ 
+
+	 ]]>
+	 
+	</delete>
+</mapper>

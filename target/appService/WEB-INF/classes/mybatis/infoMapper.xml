@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.app.client.dao.InfoDao">
+	<!-- 查询航空器性能 -->
+      <select id="listInfo" parameterType="map" resultType="Myinfo">
+       <!-- 分页上部 -->
+		 <include refid="Common.pageHeadOracle"/>
+		<!-- 分页上部 - END -->
+		select info_id,
+       		info_title,
+	       (select para_value
+	          from T_APP_PARAMETER_DETAIL
+	         where para_id = 'INFO_TYPE'
+	           and para_code = t.info_type) as info_type,
+	       info_content,
+	       info_url,
+	       to_char(create_time, 'YYYY-MM-DD') as info_date,
+	       (DECODE(to_char(sysdate,'YYYYMMDD'),to_char(create_time, 'YYYYMMDD'),1,0)) as today_flag
+	  	from t_app_myinfo t
+	 	where t.is_open = '0'
+	 	order by create_time desc
+	 	<!-- 分页下部 -->
+	   <include refid="Common.pageTailOracle"/> 
+		<!-- 分页下部 - END -->        	
+    </select>
+</mapper>

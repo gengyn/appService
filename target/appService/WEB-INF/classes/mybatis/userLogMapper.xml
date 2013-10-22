@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.app.client.dao.UserLogDao">
+	
+    <!-- 新增操作日志 -->	
+    <insert id="insertOPLog" parameterType="map">
+		INSERT INTO T_APP_USER_LOGS
+		(
+		<trim prefix="" prefixOverrides=",">
+			<if test="log_id != null">,log_id</if>
+			<if test="op_id != null">,op_id</if>
+			<if test="op_mobile != null">,op_mobile</if>
+			<if test="op_name != null">,op_name</if>
+			<if test="op_content != null">,op_content</if>
+			<if test="op_result != null">,op_result</if>
+		</trim>
+		)
+		VALUES
+		(
+		<trim prefix="" prefixOverrides=",">
+			<if test="log_id != null">,#{log_id}</if>
+			<if test="op_id != null">,#{op_id}</if>
+			<if test="op_mobile != null">,#{op_mobile}</if>
+			<if test="op_name != null">,#{op_name}</if>
+			<if test="op_content != null">,#{op_content}</if>
+			<if test="op_result != null">,#{op_result}</if>
+		</trim>
+		)
+	</insert>
+	<!-- 删除操作日志 -->
+	<delete id="delOPLog" >
+		DELETE FROM T_APP_USER_LOGS WHERE OP_TIME &lt; sysdate - #{value}
+	</delete>
+</mapper>

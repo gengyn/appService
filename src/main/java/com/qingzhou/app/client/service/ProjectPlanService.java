@@ -30,6 +30,7 @@ public class ProjectPlanService  extends BaseService {
 	String customer_id = "";//客户号
 	String sche_id = "";
 	//工程状态
+	static int PROJECT_NOSTART = 0x10; //未开工
 	static int PROJECT_NORMAL = 0x11; //正常
 	static int PROJECT_DEFER = 0x12;	 //延误
 	static int PROJECT_FINISH = 0x13; //竣工
@@ -76,10 +77,16 @@ public class ProjectPlanService  extends BaseService {
 		
 		if (currID == -1)
 		{
-			projectPlan.setCurrID(level2List.size()-1);
+			projectPlan.setCurrID(level1List.size()-1);
 			projectPlan.setCurrPlanName("已竣工");
 			projectPlan.setPlanStatus(this.PROJECT_FINISH);
-		}else
+		}else if (currID == -2)
+		{
+			projectPlan.setCurrID(0);
+			projectPlan.setCurrPlanName("没有工程进度信息");
+			projectPlan.setPlanStatus(this.PROJECT_NOSTART);
+		}
+		else
 		{
 			projectPlan.setCurrID(currID);
 			projectPlan.setCurrPlanName(level1List.get(currID).getProject_process_name());
@@ -169,6 +176,8 @@ public class ProjectPlanService  extends BaseService {
 	private int getCurrPlanID(List<ProjectPlanDetail> ppdList)
 	{
 		int id = -1;
+		//还未开工，返回-2
+		if (ppdList.size() == 0 ) id = -2;
 		for(int i=0;i<ppdList.size();i++)
 		{
 			ProjectPlanDetail ppd = ppdList.get(i);

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.app.client.dao.ProjectPlanDao">
+    <!-- 查询项目进度明细 -->
+    <select id="listProjectPlan" resultType="ProjectPlanDetail" parameterType="map">
+       select t1.sche_id, 
+       t2.schedetail_id,
+       t2.project_process_id,
+       t2.project_process_name,
+       t2.project_process_level,
+       t2.project_process_order,
+       t2.project_process_parent_id,
+       to_char(t2.sche_start_project,'MM-DD') as sche_start_project,
+       to_char(t2.sche_end_project,'MM-DD') as sche_end_project,
+       t2.is_last_done,
+       t2.schedetail_Flag,
+       (select count(f.file_id)
+          from t_saas_project_sche_file f
+         where f.sche_detail_id = t2.schedetail_id
+           and f.sche_id = t2.sche_id
+           ) as photoCount
+ 		 from T_SAAS_PROJECT_SCHE_NEW t1, T_SAAS_PROJECT_SCHE_DETAIL t2
+		 where t2.sche_id = t1.sche_id
+		   and t2.detail_flag = '0'
+			<if test="customer_id != null and customer_id != ''">
+					 and t1.reg_id=#{customer_id} 
+			</if>
+			<if test="project_process_level != null and project_process_level != ''">
+					 and t2.project_process_level=#{project_process_level} 
+			</if>
+			<if test="schedetail_flag != null and schedetail_flag != ''">
+					 and t2.schedetail_flag=#{schedetail_flag} 
+			</if>
+			<if test="is_last_done != null and is_last_done != ''">
+					 and t2.is_last_done=#{is_last_done} 
+			</if>
+			<if test="project_process_parent_id != null and project_process_parent_id != ''">
+					 and t2.project_process_parent_id=#{project_process_parent_id} 
+			</if>
+			<if test="curr_date != null and curr_date != ''">
+					 and to_date(#{curr_date},'YYYY-MM-DD') between t2.sche_start_project and t2.sche_end_project 
+			</if>
+		   order by to_number(t2.project_process_order)
+    </select>	
+    <!-- 查询照片 -->
+  	<select id="listPhoto" parameterType="map" resultType="RestProjectPhoto">
+		select f.file_path
+          from t_saas_project_sche_file f
+         where f.file_flag = '0'
+           and f.sche_id = #{sche_id}
+           and f.sche_detail_id = #{sche_detail_id}
+           order by add_time desc
+    </select>
+    <select id="getPassDay" parameterType="map" resultType="int">
+		select to_date(#{curr_date},'YYYY-MM-DD')-max(t.sche_end_project)  as days
+		from T_SAAS_PROJECT_SCHE_DETAIL t 
+		where t.detail_flag='0' 
+		and t.project_process_level='1'
+		 and t.sche_id=#{sche_id}
+    </select>
+     <select id="getLeadDay" parameterType="map" resultType="int">
+		select min(t.sche_start_project)-to_date(#{curr_date},'YYYY-MM-DD') as days
+ 		from T_SAAS_PROJECT_SCHE_DETAIL t
+ 		where t.detail_flag = '0'
+  		and t.project_process_level = '1'
+  		and t.sche_id = #{sche_id} 
+    </select>
+    
+</mapper>

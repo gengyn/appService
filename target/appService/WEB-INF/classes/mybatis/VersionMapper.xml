@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingzhou.app.client.dao.VersionDao">
+	<!-- 查询最新版本信息-->
+      <select id="getLastVer" parameterType="map" resultType="Version">
+		select 	ver_code,
+       			ver_name,
+       			update_info,
+       			to_char(ver_date,'YYYY-MM-DD') as ver_date,
+       			file_size,
+       			file_name,
+       			os_type,
+       			ver_type,
+       			forceupdate
+  		from t_app_version
+ 		where os_type = #{os_type} and ver_type = #{ver_type}
+ 		order by ver_date desc
+	   </select>
+    <!-- 列表查询版本信息-->
+    <select id="listVersion" resultType="Version" parameterType="map">
+        
+       select 	ver_code,
+       			ver_name,
+       			update_info,
+       			to_char(ver_date,'YYYY-MM-DD') as ver_date,
+       			file_size,
+       			file_name,
+       			os_type,
+       			ver_type,
+       			forceupdate
+  		from t_app_version 
+		<where>
+			<if test="ver_name != null and ver_name != ''">
+					 and   ver_name like '%'||#{ver_name}||'%'
+			</if>
+			<if test="os_type != null and os_type != ''">
+					 and   os_type=#{os_type} 
+			</if>
+			<if test="ver_type != null and ver_type != ''">
+					 and   ver_type=#{ver_type} 
+			</if>
+		</where>
+			order by ver_date desc
+    </select>	
+    
+</mapper>

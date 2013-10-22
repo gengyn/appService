@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Command line test" failures="1" tests="1" time="2.281" errors="0">
+<testsuite name="Command line test" failures="0" tests="1" time="3.033" errors="0">
   <properties/>
-  <testcase name="listProjectPlan" time="0.226" classname="test.ProjectPlanTest">
-    <failure type="org.apache.ibatis.binding.BindingException" message="Mapper method &amp;apos;com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).">
-      <![CDATA[org.apache.ibatis.binding.BindingException: Mapper method 'com.qingzhou.app.client.dao.ProjectPlanDao.getPassDay attempted to return null from a method with a primitive return type (int).
-	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:69)
-	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43)
-	at $Proxy32.getPassDay(Unknown Source)
-	at com.qingzhou.app.client.service.ProjectPlanService.getPlanStatus(ProjectPlanService.java:175)
-	at com.qingzhou.app.client.service.ProjectPlanService.getProjectPlan(ProjectPlanService.java:83)
-	at com.qingzhou.app.client.service.ProjectPlanService$$FastClassByCGLIB$$b0c9e5a6.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:698)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:631)
-	at com.qingzhou.app.client.service.ProjectPlanService$$EnhancerByCGLIB$$54f9a613.getProjectPlan(<generated>)
-	at test.ProjectPlanTest.listProjectPlan(ProjectPlanTest.java:27)
-	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:155)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
-	at java.lang.Thread.run(Thread.java:662)
-... Removed 26 stack frames]]>
-    </failure>
-  </testcase>
+  <testcase name="listProjectPlan" time="0.251" classname="test.ProjectPlanTest"/>
 </testsuite>
