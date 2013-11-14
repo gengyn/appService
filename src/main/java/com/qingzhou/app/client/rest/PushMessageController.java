@@ -35,6 +35,7 @@ public class PushMessageController extends BaseController{
 		
 		Map<String,Object> extra = new HashMap<String,Object>();
 		extra.put("SENDER", message.getSender());
+		extra.put("SENDERNAME", message.getSender_name());
 		extra.put("RECEIVER", message.getReceiver());
 		extra.put("IMG_URL", message.getImg_url());
 		extra.put("VOICE_URL", message.getVoice_url());
@@ -78,6 +79,7 @@ public class PushMessageController extends BaseController{
 		{
 			Map<String,Object> extra = new HashMap<String,Object>();
 			extra.put("SENDER", msgItem.getSender());
+			extra.put("SENDERNAME", message.getSender_name());
 			extra.put("RECEIVER", msgItem.getReceiver());
 			extra.put("IMG_URL", msgItem.getImg_url());
 			extra.put("VOICE_URL", msgItem.getVoice_url());

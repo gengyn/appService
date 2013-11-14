@@ -4,6 +4,7 @@ public class MyMessage {
 	private String user_token;
 	private int message_id;
 	private String sender;
+	private String sender_name;
 	private String receiver;
 	private String message_type;
 	private String message_title;
@@ -93,6 +94,11 @@ public class MyMessage {
 	public void setLast_send_time(String last_send_time) {
 		this.last_send_time = last_send_time;
 	}
-	
+	public String getSender_name() {
+		return sender_name;
+	}
+	public void setSender_name(String sender_name) {
+		this.sender_name = sender_name;
+	}
 
 }

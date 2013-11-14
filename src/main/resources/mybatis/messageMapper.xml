@@ -7,6 +7,7 @@
     <select id="listMessage" resultType="MyMessage" parameterType="map">
       	select message_id,
 	       sender,
+	       sender_name,
 	       receiver,
 	       message_type,
 	       message_title,
@@ -37,6 +38,7 @@
 		<trim prefix="" prefixOverrides=",">
 			<if test="message_id != null">,message_id</if>
 			<if test="sender != null">,sender</if>
+			<if test="sender_name != null">,sender_name</if>
 			<if test="receiver != null">,receiver</if>
 			<if test="message_type != null">,message_type</if>
 			<if test="message_title != null">,message_title</if>
@@ -53,6 +55,7 @@
 		<trim prefix="" prefixOverrides=",">
 			<if test="message_id != null">,#{message_id}</if>
 			<if test="sender != null">,#{sender}</if>
+			<if test="sender_name != null">,#{sender_name}</if>
 			<if test="receiver != null">,#{receiver}</if>
 			<if test="message_type != null">,#{message_type}</if>
 			<if test="message_title != null">,#{message_title}</if>

@@ -36,7 +36,7 @@
        t1.CONTRACT_SUM_PRICE - t1.FACT_TOTALMONEY as FAVORABLE_PRICE, --优惠金额
        t1.BASE_ITEM_PRICE, --基础项目金额
        t1.MAIN_ITEM_PRICE, --主材项目金额
-       t1.FINISH_ITEM_PRICE, --成品项目金额
+       --t1.FINISH_ITEM_PRICE, --成品项目金额
        t1.DESIGN_FEE, --设计费
        t1.MANAGE_FEE, --管理费
        TO_CHAR(t1.CONTRACTBEGINDATE,'YYYY-MM-DD') as CONTRACTBEGINDATE, --合同开工日期
