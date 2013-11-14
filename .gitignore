@@ -2,6 +2,9 @@
 ## Eclipse
 #################
 
+target/
+test-output/
+
 *.pydevproject
 .project
 .metadata
@@ -15,9 +18,15 @@ local.properties
 .classpath
 .settings/
 .loadpath
-target/
-test-output/
-.class
+
+
+*.class
+ 
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
 
 # External tool builders
 .externalToolBuilders/

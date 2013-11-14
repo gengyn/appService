@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Command line test" failures="0" tests="1" time="3.033" errors="0">
-  <properties/>
-  <testcase name="listProjectPlan" time="0.251" classname="test.ProjectPlanTest"/>
-</testsuite>
