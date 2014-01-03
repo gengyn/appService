@@ -81,6 +81,8 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 		return new StringBuffer(converted.length()).append(Character.toLowerCase(converted.charAt(0))).append(converted.substring(1))
 				.toString();
 	}
+	
+	
 
 	public static void main(String a[]) {
 		System.out.println(removeUnderscores("aaa_asf_af_sf"));

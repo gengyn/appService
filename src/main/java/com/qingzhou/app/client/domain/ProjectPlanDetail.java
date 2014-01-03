@@ -23,7 +23,56 @@ public class ProjectPlanDetail {
 	private String is_last_done;	//	是否为最后完成状态（0：不是；1：是）
 	private int photocount;	//	照片数量
 	
+	private String materialMoney;//主材明细
+	private String basicMoney;//基础明细
+	private String materialState;//主材状态
+	private String business_id;//企业ID
+	private String quo_id;//报价单号
+	private String process_id;//进程号，查询基础明细使用，不清楚为什么那么多进程号
+	private String update_time;//更新时间，用于表示完成时间
 	
+	public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+	public String getProcess_id() {
+		return process_id;
+	}
+	public void setProcess_id(String process_id) {
+		this.process_id = process_id;
+	}
+	public String getMaterialMoney() {
+		return materialMoney;
+	}
+	public void setMaterialMoney(String materialMoney) {
+		this.materialMoney = materialMoney;
+	}
+	public String getBasicMoney() {
+		return basicMoney;
+	}
+	public void setBasicMoney(String basicMoney) {
+		this.basicMoney = basicMoney;
+	}
+	public String getMaterialState() {
+		return materialState;
+	}
+	public void setMaterialState(String materialState) {
+		this.materialState = materialState;
+	}
+	public String getBusiness_id() {
+		return business_id;
+	}
+	public void setBusiness_id(String business_id) {
+		this.business_id = business_id;
+	}
+	public String getQuo_id() {
+		return quo_id;
+	}
+	public void setQuo_id(String quo_id) {
+		this.quo_id = quo_id;
+	}
 	public String getCustomer_id() {
 		return customer_id;
 	}

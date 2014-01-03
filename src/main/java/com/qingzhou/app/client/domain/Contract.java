@@ -1,6 +1,7 @@
 package com.qingzhou.app.client.domain;
 
 import java.util.List;
+import java.util.Map;
 
 public class Contract {
 
@@ -25,14 +26,6 @@ public class Contract {
 	private String reg_stylist_name;//设计师姓名
 	private String reg_stylist_mobile;//设计师电话
 	private String quo_id;//报价单ID
-	private String fact_totalmoney;//实际总金额
-	private String contract_sum_price;//报价总金额
-	private String favorable_price;//优惠金额
-	private String base_item_price;//基础项目金额
-	private String main_item_price;//主材项目金额
-	private String finish_item_price;//成品项目金额
-	private String design_fee;//设计费
-	private String manage_fee;//管理费
 	private String contractbegindate;//合同开工日期
 	private String contractenddate;//合同竣工日期
 	private String date_number;//工期
@@ -40,6 +33,22 @@ public class Contract {
 	
 	private List<ContractDiscount> contractList;//合同优惠
 	
+	private ContractAmount contractAmount;//项目相关金额
+	
+	private Map<String,ContractPayment> cpMap;//客户交款情况
+	
+	public Map<String, ContractPayment> getCpMap() {
+		return cpMap;
+	}
+	public void setCpMap(Map<String, ContractPayment> cpMap) {
+		this.cpMap = cpMap;
+	}
+	public ContractAmount getContractAmount() {
+		return contractAmount;
+	}
+	public void setContractAmount(ContractAmount contractAmount) {
+		this.contractAmount = contractAmount;
+	}
 	public List<ContractDiscount> getContractList() {
 		return contractList;
 	}
@@ -172,54 +181,7 @@ public class Contract {
 	public void setQuo_id(String quo_id) {
 		this.quo_id = quo_id;
 	}
-	public String getFact_totalmoney() {
-		return fact_totalmoney;
-	}
-	public void setFact_totalmoney(String fact_totalmoney) {
-		this.fact_totalmoney = fact_totalmoney;
-	}
-	public String getContract_sum_price() {
-		return contract_sum_price;
-	}
-	public void setContract_sum_price(String contract_sum_price) {
-		this.contract_sum_price = contract_sum_price;
-	}
-	public String getFavorable_price() {
-		return favorable_price;
-	}
-	public void setFavorable_price(String favorable_price) {
-		this.favorable_price = favorable_price;
-	}
-	public String getBase_item_price() {
-		return base_item_price;
-	}
-	public void setBase_item_price(String base_item_price) {
-		this.base_item_price = base_item_price;
-	}
-	public String getMain_item_price() {
-		return main_item_price;
-	}
-	public void setMain_item_price(String main_item_price) {
-		this.main_item_price = main_item_price;
-	}
-	public String getFinish_item_price() {
-		return finish_item_price;
-	}
-	public void setFinish_item_price(String finish_item_price) {
-		this.finish_item_price = finish_item_price;
-	}
-	public String getDesign_fee() {
-		return design_fee;
-	}
-	public void setDesign_fee(String design_fee) {
-		this.design_fee = design_fee;
-	}
-	public String getManage_fee() {
-		return manage_fee;
-	}
-	public void setManage_fee(String manage_fee) {
-		this.manage_fee = manage_fee;
-	}
+	
 	public String getContractbegindate() {
 		return contractbegindate;
 	}

@@ -24,7 +24,7 @@ public class ContractTest extends TestBase{
 	@Test
 	public void listProjectPlan()
 	{
-		projectPlanService.getProjectPlan("4028813040868084014086834f7d0001");
+		//projectPlanService.getProjectPlan("4028813040868084014086834f7d0001");
 	}
 }
 

@@ -30,7 +30,7 @@
    and t2.REG_CUSTOMER_MGR = t3.USER_ID(+)
    and t2.REG_Project_Mgr = t4.USER_ID(+)
    and t2.REG_STYLIST = t5.USER_ID(+)
-   and t2.REG_CUSTOMER_STATE in ('05','06')
+   and t2.REG_CUSTOMER_STATE in ('06','07')
    and t2.REG_NAME = #{user_name}
    and t2.REG_FIRST_MOBILEPHONE = #{user_phone}
     </select>

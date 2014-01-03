@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.qingzhou.app.client.dao.RestCommonDao;
 import com.qingzhou.app.client.dao.ProjectPlanDao;
+import com.qingzhou.app.client.dao.LoginStatusDao;
+import com.qingzhou.app.client.domain.BaseDetail;
+import com.qingzhou.app.client.domain.MainDetail;
+import com.qingzhou.app.client.domain.UserBase;
+import com.qingzhou.app.client.domain.LoginStatus;
 import com.qingzhou.app.client.domain.ProjectPlanDetail;
 import com.qingzhou.app.client.domain.ProjectPhoto;
 import com.qingzhou.app.client.domain.RestProjectPhoto;
@@ -26,6 +31,8 @@ public class ProjectPlanService  extends BaseService {
 	private ProjectPlanDao projectPlanDao;	
 	@Autowired
 	private RestCommonDao restCommonDao;
+	@Autowired
+	private LoginStatusDao loginStatusDao;
 	String currDate = "";//当前日期
 	String customer_id = "";//客户号
 	String sche_id = "";
@@ -47,12 +54,15 @@ public class ProjectPlanService  extends BaseService {
 	public void setRestCommonDao(RestCommonDao restCommonDao) {
 		this.restCommonDao = restCommonDao;
 	}
+	public void setLoginStatusDao(LoginStatusDao loginStatusDao) {
+		this.loginStatusDao = loginStatusDao;
+	}
 	/**
 	 * 返回工程进度信息
 	 * @param customer_id
 	 * @return
 	 */
-	public RestProjectPlan getProjectPlan(String customer_id)
+	public RestProjectPlan getProjectPlan(String customer_id,String usertoken)
 	{
 		RestProjectPlan projectPlan = new RestProjectPlan();
 		currDate = restCommonDao.getCurDate();
@@ -60,9 +70,14 @@ public class ProjectPlanService  extends BaseService {
 			return projectPlan;
 		else this.customer_id = customer_id;
 		//查询
+		//因查询基础和主材情况，需求查询合同中的报价单和企业ID，所以根据客户ID先做次查询
+		UserBase userBase = loginStatusDao.selectByLogin(loginStatusDao.selectByPK(usertoken));
+		
 		ProjectPlanDetail projectPlanDetail = new ProjectPlanDetail();
 		projectPlanDetail.setCustomer_id(customer_id);
 		projectPlanDetail.setProject_process_level("1");
+		projectPlanDetail.setQuo_id(userBase.getQuo_id());
+		projectPlanDetail.setBusiness_id(userBase.getBisiness_id());
 		//第一级
 		List<ProjectPlanDetail> level1List = projectPlanDao.listProjectPlan(projectPlanDetail);
 		//第二级
@@ -91,6 +106,9 @@ public class ProjectPlanService  extends BaseService {
 			projectPlan.setCurrID(currID);
 			projectPlan.setCurrPlanName(level1List.get(currID).getProject_process_name());
 			projectPlan.setPlanStatus(getPlanStatus(level1List.get(currID)));
+			projectPlan.setTime_limit(level1List.get(currID).getSche_days());
+			projectPlan.setBase_detail_value(level1List.get(currID).getBasicMoney());
+			projectPlan.setMain_detail_value(level1List.get(currID).getMaterialMoney());
 		}
 		
 		for(ProjectPlanDetail level1ppd:level1List)
@@ -103,6 +121,11 @@ public class ProjectPlanService  extends BaseService {
 			rppd.setSche_start_project(level1ppd.getSche_start_project());
 			rppd.setSche_end_project(level1ppd.getSche_end_project());
 			rppd.setPhotocount(level1ppd.getPhotocount());
+			//新加入基础明细和主材明细
+			rppd.setBasicMoney(level1ppd.getBasicMoney());
+			rppd.setMaterialMoney(level1ppd.getMaterialMoney());
+			rppd.setUpdate_time(level1ppd.getUpdate_time());
+			
 			sche_id = level1ppd.getSche_id();
 			if (currID == -1 || !LogicUtils.isEmpty(level1ppd.getSchedetail_flag()))
 				rppd.setProject_process_status(this.PROCESS_END);
@@ -127,6 +150,14 @@ public class ProjectPlanService  extends BaseService {
 					level2rppd.setSche_start_project(level2ppd.getSche_start_project()==null?"":level2ppd.getSche_start_project());
 					level2rppd.setSche_end_project(level2ppd.getSche_end_project()==null?"":level2ppd.getSche_end_project());
 					level2rppd.setPhotocount(level2ppd.getPhotocount());
+					//新加入基础明细、主材明细和主材状态
+					level2rppd.setBasicMoney(level2ppd.getBasicMoney());
+					level2rppd.setMaterialMoney(level2ppd.getMaterialMoney());
+					level2rppd.setMaterialState(level2ppd.getMaterialState());
+					//新加入进程号和完成时间
+					level2rppd.setProcess_id(level2ppd.getProcess_id());
+					level2rppd.setUpdate_time(level2ppd.getUpdate_time());
+					
 					if (!LogicUtils.isEmpty(level2ppd.getSchedetail_flag()))
 						level2rppd.setProject_process_status(this.PROCESS_END);
 					else level2rppd.setProject_process_status(this.PROCESS_NOSTART);
@@ -244,6 +275,37 @@ public class ProjectPlanService  extends BaseService {
 	}
 	
 	
+	/**
+	 * 查询基础明细
+	 * @param conditionMap
+	 * @return
+	 */
+	public List<BaseDetail>listBaseDetail(String quo_id,String bisiness_id,String process_id)
+	{
+		Map<String,String> conditionMap = new HashMap<String,String>();
+		conditionMap.put("quo_id", quo_id);
+		conditionMap.put("bisiness_id", bisiness_id);
+		conditionMap.put("process_id", process_id);
+		
+		return projectPlanDao.listBaseDetail(conditionMap);
+	}
+	/**
+	 * 查询主材明细及状态
+	 * @param quo_id
+	 * @param bisiness_id
+	 * @param project_process_id
+	 * @return
+	 */
+	public List<MainDetail>listMainDetail(String quo_id,String bisiness_id,String project_process_id,String customer_id)
+	{
+		Map<String,String> conditionMap = new HashMap<String,String>();
+		conditionMap.put("quo_id", quo_id);
+		conditionMap.put("bisiness_id", bisiness_id);
+		conditionMap.put("project_process_id", project_process_id);
+		conditionMap.put("customer_id", customer_id);
+		
+		return projectPlanDao.listMainDetail(conditionMap);
+	}
 
 	@Override
 	public Integer count(Object entity) {
@@ -256,6 +318,8 @@ public class ProjectPlanService  extends BaseService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 	
 	

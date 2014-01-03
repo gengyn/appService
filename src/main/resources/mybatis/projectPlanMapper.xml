@@ -12,15 +12,36 @@
        t2.project_process_level,
        t2.project_process_order,
        t2.project_process_parent_id,
+       t2.process_id,
        to_char(t2.sche_start_project,'MM-DD') as sche_start_project,
        to_char(t2.sche_end_project,'MM-DD') as sche_end_project,
+       to_char(t2.update_time,'MM-DD') as update_time,
+       t2.sche_days,
        t2.is_last_done,
        t2.schedetail_Flag,
        (select count(f.file_id)
           from t_saas_project_sche_file f
          where f.sche_detail_id = t2.schedetail_id
            and f.sche_id = t2.sche_id
-           ) as photoCount
+           ) as photoCount,
+       FN_PROJECT_MATERIAL_SUM_MONEY(t2.PROJECT_PROCESS_ID,
+                                     t2.PROCESS_ID,
+                                     t2.PROJECT_PROCESS_LEVEL,
+                                     t2.SCHE_ID,
+                                     #{quo_id},
+                                     #{business_id}) as materialMoney,
+       FN_PROJECT_PROCESS_TOTAL_MONEY(t2.PROJECT_PROCESS_ID,
+                                      t2.PROCESS_ID,
+                                      t2.PROJECT_PROCESS_LEVEL,
+                                      t2.SCHE_ID,
+                                      #{quo_id},
+                                      #{business_id}) as basicMoney,
+       FN_PROJECT_MATERIAL_PUR_STATE(t2.PROJECT_PROCESS_ID,
+                                     t2.PROCESS_ID,
+                                     t2.SCHE_ID,
+                                     #{quo_id},
+                                     #{customer_id},
+                                     #{business_id}) as materialState
  		 from T_SAAS_PROJECT_SCHE_NEW t1, T_SAAS_PROJECT_SCHE_DETAIL t2
 		 where t2.sche_id = t1.sche_id
 		   and t2.detail_flag = '0'
@@ -66,6 +87,153 @@
  		where t.detail_flag = '0'
   		and t.project_process_level = '1'
   		and t.sche_id = #{sche_id} 
+    </select>
+    <!-- 基础明细查询 -->
+    <select id="listBaseDetail" parameterType="map" resultType="BaseDetail">
+	select basName, --项目名称
+       basUnit, --单位
+       basePrice, -- 单价
+       (budgetcount - basecount) as practicalcount,--数量
+       basePrice * (budgetcount - basecount) as practicalprice --金额
+  	from (select tt.basName,
+               tt.basStandard,
+               tt.basUnit,
+               trim(tt.basPrice) as basePrice,
+               sum(decode(tt.basmode, '0', tt.bascount, '1', 0)) as budgetcount,
+               sum(decode(tt.basmode, '1', tt.bascount, '0', 0)) as basecount,
+               max(l.list_dictionary_name)
+          from (select t.bas_name as basname,
+                       t.bas_standard as basstandard,
+                       t.bas_unit as basunit,
+                       t.bas_count as bascount,
+                       '0' as basmode,
+                       t.bas_price as basprice,
+                       t.bas_type as bastype
+                  from t_saas_budget_basic t
+                 where t.bas_data_flag = '1'
+                   and t.quo_id = #{quo_id}
+                   and t.bisiness_id = #{bisiness_id}
+                   and t.project_process = #{process_id}
+                union all
+                select u.udt_name,
+                       u.udt_standard,
+                       u.udt_unit,
+                       u.udt_count,
+                       '1' as basmode,
+                       u.udt_price,
+                       u.udt_type
+                  from t_saas_budget_updowntemp u
+                 where u.udt_data_flag = '1'
+                   and u.bisiness_id = #{bisiness_id}
+                   and u.project_process = #{process_id}
+                   and u.ud_id in
+                       (select up.ud_id
+                          from t_saas_budget_updownitem up
+                         where up.quo_id = #{quo_id})) tt
+          left join t_pub_dictionary d
+            on (d.dictionary_no = 'ItemTypeProject' and
+               d.bisiness_id = #{bisiness_id})
+          left join t_pub_listdictionary l
+            on (d.dictionary_id = l.dictionary_id and
+               l.list_dictionary_value = tt.bastype and
+               l.bisiness_id = #{bisiness_id})
+         group by tt.basname,
+                  tt.basstandard,
+                  tt.basunit,
+                  trim(tt.basprice),
+                  tt.bastype
+         order by trim(tt.basprice) desc)
+  </select>
+  <!-- 主材明细查询 -->
+  <select id="listMainDetail" parameterType="map" resultType="MainDetail">
+	select materialBrand,--品牌
+       materialName, --名称
+       materialSpec, --描述
+       materialModel, --模型
+       materialUnit, --单位
+       materialSalePrice,--单价
+       budgetcount - materialcount as materialcount,--实际数量
+       materialSalePrice * (budgetcount - materialcount) as materialPrice, --实际金额
+       materialStatus --主材状态
+  	from (select tt.materialBrand,
+               tt.materialName,
+               tt.materialSpec,
+               tt.materialModel,
+               (select p.LIST_DICTIONARY_NAME
+                  from T_PUB_LISTDICTIONARY p
+                 where p.bisiness_id = #{bisiness_id}
+                   and p.dictionary_no = 'materialUnit'
+                   and p.list_dictionary_value = tt.materialUnit) as materialUnit,
+               trim(tt.materialSalePrice) as materialSalePrice,
+               sum(decode(tt.basmode, '0', tt.materialcount, '1', 0)) as budgetcount,
+               sum(decode(tt.basmode, '1', tt.materialcount, '0', 0)) as materialcount,
+               materialStatus
+          from (select t.mpro_sort as materialsort,
+                       t.mpro_brand as materialbrand,
+                       t.mpro_name as materialname,
+                       t.mpro_unit as materialunit,
+                       '' as materialtype,
+                       t.mpro_series as materialseries,
+                       t.mpro_spec as materialspec,
+                       t.mpro_model as materialmodel,
+                       t.mpro_sale_price as materialsaleprice,
+                       t.mpro_count as materialcount,
+                       '0' as basmode,
+                       FN_MATERIAL_PUR_STATE(t.mpro_sort,
+                             t.mpro_id,
+                             t.mpro_type,
+                             #{customer_id},
+                             #{bisiness_id}) as materialStatus
+                  from t_saas_budget_mainproject_temp t
+                 where t.mpro_dataflag = '1'
+                   and t.quo_id = #{quo_id}
+                   and t.bisiness_id = #{bisiness_id}
+                   and t.mpro_sort in
+                       (select i.material_sort
+                          from t_saas_inventory_install i
+                         where i.install_proce_id =
+                               #{project_process_id})
+                union all
+                select u.udm_sort,
+                       u.udm_brand,
+                       u.udm_name,
+                       u.udm_unit,
+                       '',
+                       u.udm_series,
+                       u.udm_spec,
+                       u.udm_model,
+                       u.udm_sale_price,
+                       u.udm_count,
+                       '1' as basmode,
+                       FN_MATERIAL_PUR_STATE(u.udm_sort,
+                             u.udm_id,
+                             '21',
+                             #{customer_id},
+                             #{bisiness_id}) as materialStatus
+                  from t_saas_budget_updownmain u
+                 where u.udm_dataflag = '1'
+                   and u.bisiness_id = #{bisiness_id}
+                   and u.udm_sort in
+                       (select i.material_sort
+                          from t_saas_inventory_install i
+                         where i.install_proce_id =
+                               #{project_process_id})
+                   and u.ud_id in
+                       (select up.ud_id
+                          from t_saas_budget_updownitem up
+                         where up.quo_id = #{quo_id})) tt
+         group by tt.materialsort,
+                  tt.materialbrand,
+                  tt.materialname,
+                  tt.materialunit,
+                  tt.materialtype,
+                  tt.materialseries,
+                  tt.materialspec,
+                  tt.materialmodel,
+                  trim(tt.materialsaleprice),
+                  materialStatus
+         order by tt.materialsort, tt.materialbrand, tt.materialname)
+
     </select>
     
 </mapper>

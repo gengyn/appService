@@ -12,7 +12,42 @@ public class RestProjectPlanDetail {
 	private String project_process_name;	//	进程名称
 	private int project_process_status;//进程状态 nostart未开始  going进行中 end完工
 	private int photocount;	//	照片数量
+	private String materialMoney;//主材明细
+	private String basicMoney;//基础明细
+	private String materialState;//主材状态
+	private String process_id;
+	private String update_time;//更新时间，用于表示完成时间
 	
+	public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+	public String getProcess_id() {
+		return process_id;
+	}
+	public void setProcess_id(String process_id) {
+		this.process_id = process_id;
+	}
+	public String getMaterialMoney() {
+		return materialMoney;
+	}
+	public void setMaterialMoney(String materialMoney) {
+		this.materialMoney = materialMoney;
+	}
+	public String getBasicMoney() {
+		return basicMoney;
+	}
+	public void setBasicMoney(String basicMoney) {
+		this.basicMoney = basicMoney;
+	}
+	public String getMaterialState() {
+		return materialState;
+	}
+	public void setMaterialState(String materialState) {
+		this.materialState = materialState;
+	}
 	private List<RestProjectPlanDetail> restProjectPlanDetailList;
 	
 	public List<RestProjectPlanDetail> getRestProjectPlanDetailList() {

@@ -9,6 +9,33 @@ public class RestProjectPlan {
 	private int currID;//当前进度序号
 	private int planStatus;//工程状态，normal正常  defer延期  finish竣工 
 	private String sche_id;//工程ID
+	private String base_detail_value;//基础明细
+	private String main_detail_value;//主材明细
+	private String time_limit;//工期
+
+	public String getTime_limit() {
+		return time_limit;
+	}
+
+	public void setTime_limit(String time_limit) {
+		this.time_limit = time_limit;
+	}
+
+	public String getBase_detail_value() {
+		return base_detail_value;
+	}
+
+	public void setBase_detail_value(String base_detail_value) {
+		this.base_detail_value = base_detail_value;
+	}
+
+	public String getMain_detail_value() {
+		return main_detail_value;
+	}
+
+	public void setMain_detail_value(String main_detail_value) {
+		this.main_detail_value = main_detail_value;
+	}
 
 	private List<RestProjectPlanDetail> projectPlanDetailList; //项目明细
 

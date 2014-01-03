@@ -4,80 +4,284 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qingzhou.app.client.dao.ContractDao">
 	<!-- 根据合同ID查询合同详情 -->
-      <select id="selectByCustomer" parameterType="map" resultType="Contract">
-		select t1.FORMAL_CONTRACT_ID, --正式合同主键 
-       t1.CONTRACT_NUM, --合同编号
-       t1.CONTRACT_TYPE, --合同类型代码
-       (SELECT dd.LIST_DICTIONARY_NAME
-          FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
-         WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
-           AND dm.DICTIONARY_NO = 'ContractStatu'
-           AND dd.LIST_DICTIONARY_VALUE = t1.CONTRACT_TYPE
-           AND dm.BISINESS_ID = t1.bisiness_id) as CONTRACT_TYPE_NAME, --合同类型名称
-       TO_CHAR(t1.FILL_DATE,'YYYY-MM-DD') as FILL_DATE, --填报日期
-       TO_CHAR(t1.CONTRACTSIGNED_DATE,'YYYY-MM-DD') as CONTRACTSIGNED_DATE, --合同签订日期
-       t1.CUSTOMER_ID, --客户ID
-       t2.REG_NAME, --客户姓名
-       t2.REG_FIRST_MOBILEPHONE as REG_PHONE, --客户手机
-       t2.REG_VILLAGE_NAME, --小区名称
-       t2.REG_CONSTRUCT_ADDRESS, --施工地址
-       t2.REG_CUSTOMER_MGR, --客户经理代码
-       t3.NAME as REG_CUSTOMER_MGR_NAME,--客户经理姓名
-       t3.MOBILE as REG_CUSTOMER_MGR_MOBILE, --客户经理电话
-       t2.REG_Project_Mgr, --工程项目经理代码
-       t4.NAME as REG_Project_Mgr_name, --工程项目经理姓名
-       t4.MOBILE as REG_Project_Mgr_mobile, --工程项目经理电话
-       t2.REG_STYLIST, --设计师代码
-       t5.NAME as REG_STYLIST_NAME, --设计师姓名
-       t5.MOBILE as REG_STYLIST_mobile,--设计师电话
-       t1.QUO_ID, --报价单ID
-       t1.FACT_TOTALMONEY, --实际总金额
-       t1.CONTRACT_SUM_PRICE, --报价总金额
-       t1.CONTRACT_SUM_PRICE - t1.FACT_TOTALMONEY as FAVORABLE_PRICE, --优惠金额
-       t1.BASE_ITEM_PRICE, --基础项目金额
-       t1.MAIN_ITEM_PRICE, --主材项目金额
-       --t1.FINISH_ITEM_PRICE, --成品项目金额
-       t1.DESIGN_FEE, --设计费
-       t1.MANAGE_FEE, --管理费
-       TO_CHAR(t1.CONTRACTBEGINDATE,'YYYY-MM-DD') as CONTRACTBEGINDATE, --合同开工日期
-       TO_CHAR(t1.CONTRACTENDDATE,'YYYY-MM-DD') as CONTRACTENDDATE, --合同竣工日期
-       t1.DATE_NUMBER,--工期
-       t1.BISINESS_ID --企业ID
-  from T_SAAS_CONTRACT_FORMAL   t1,
-       T_SAAS_CUSTOMER_REGISTER t2,
-       USER_BASE_INFO           t3,
-       USER_BASE_INFO           t4,
-       USER_BASE_INFO           t5
- where t1.CUSTOMER_ID = t2.REG_ID
-   and t2.REG_CUSTOMER_MGR = t3.USER_ID(+)
-   and t2.REG_Project_Mgr = t4.USER_ID(+)
-   and t2.REG_STYLIST = t5.USER_ID(+)
-   and t1.FORMAL_CONTRACT_ID = #{formal_contract_id}
-    </select>
-    <!-- 查询合同优惠详情 -->
-    <select id="listContractDiscount" resultType="ContractDiscount" parameterType="map">
-       
-       select t1.DISCOUNT_ITEM, --优惠项目
-       t1.DISCOUNT_TYPE, --优惠类型
-       (select dd.LIST_DICTIONARY_NAME
-          FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
-         WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
-           AND dm.DICTIONARY_NO = 'yhk'
-           AND dd.LIST_DICTIONARY_VALUE = t1.DISCOUNT_TYPE
-           AND dm.BISINESS_ID = #{bisiness_id}) as DISCOUNT_TYPE_NAME, --优惠类型名称
-       t1.DISCOUNT_MODE, --优惠方式
-       (SELECT dd.LIST_DICTIONARY_NAME
-          FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
-         WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
-           AND dm.DICTIONARY_NO = 'yhkd'
-           AND dd.LIST_DICTIONARY_VALUE = t1.DISCOUNT_MODE
-           AND dm.BISINESS_ID = #{bisiness_id}) as DISCOUNT_MODE_NAME,
-       t1.DISCOUNT_CONTENT, --优惠内容
-       t1.ITEM_VALUE, --项目标价
-       t1.ITEM_COST --项目成本
-  from T_SAAS_CONTRACT_DISCOUNTDETAIL t1
- where t1.FORMAL_CONTRACT_ID = #{formal_contract_id}
- order by t1.ADD_TIME desc
-       
-    </select>	
+	<select id="selectByCustomer" parameterType="map" resultType="Contract">
+		select t1.FORMAL_CONTRACT_ID, --正式合同主键
+		t1.CONTRACT_NUM, --合同编号
+		t1.CONTRACT_TYPE, --合同类型代码
+		(SELECT dd.LIST_DICTIONARY_NAME
+		FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
+		WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
+		AND dm.DICTIONARY_NO = 'ContractStatu'
+		AND dd.LIST_DICTIONARY_VALUE = t1.CONTRACT_TYPE
+		AND dm.BISINESS_ID = t1.bisiness_id) as CONTRACT_TYPE_NAME, --合同类型名称
+		TO_CHAR(t1.FILL_DATE,'YYYY-MM-DD') as FILL_DATE, --填报日期
+		TO_CHAR(t1.CONTRACTSIGNED_DATE,'YYYY-MM-DD') as CONTRACTSIGNED_DATE,
+		--合同签订日期
+		t1.CUSTOMER_ID, --客户ID
+		t2.REG_NAME, --客户姓名
+		t2.REG_FIRST_MOBILEPHONE as REG_PHONE, --客户手机
+		t2.REG_VILLAGE_NAME, --小区名称
+		t2.REG_CONSTRUCT_ADDRESS, --施工地址
+		t2.REG_CUSTOMER_MGR, --客户经理代码
+		t3.NAME as REG_CUSTOMER_MGR_NAME,--客户经理姓名
+		t3.MOBILE as REG_CUSTOMER_MGR_MOBILE, --客户经理电话
+		t2.REG_Project_Mgr, --工程项目经理代码
+		t4.NAME as REG_Project_Mgr_name, --工程项目经理姓名
+		t4.MOBILE as REG_Project_Mgr_mobile, --工程项目经理电话
+		t2.REG_STYLIST, --设计师代码
+		t5.NAME as REG_STYLIST_NAME, --设计师姓名
+		t5.MOBILE as REG_STYLIST_mobile,--设计师电话
+		t1.QUO_ID, --报价单ID
+		TO_CHAR(t1.CONTRACTBEGINDATE,'YYYY-MM-DD') as CONTRACTBEGINDATE, --合同开工日期
+		TO_CHAR(t1.CONTRACTENDDATE,'YYYY-MM-DD') as CONTRACTENDDATE, --合同竣工日期
+		t1.DATE_NUMBER,--工期
+		t1.BISINESS_ID --企业ID
+		from T_SAAS_CONTRACT_FORMAL t1,
+		T_SAAS_CUSTOMER_REGISTER t2,
+		USER_BASE_INFO t3,
+		USER_BASE_INFO t4,
+		USER_BASE_INFO t5
+		where t1.CUSTOMER_ID = t2.REG_ID
+		and t2.REG_CUSTOMER_MGR = t3.USER_ID(+)
+		and t2.REG_Project_Mgr = t4.USER_ID(+)
+		and t2.REG_STYLIST = t5.USER_ID(+)
+		and t1.FORMAL_CONTRACT_ID = #{formal_contract_id}
+	</select>
+
+	<!-- 根据客户ID获取客户的相关项目金额 -->
+	<select id="selectAmountByCustomer" parameterType="map"
+		resultType="ContractAmount">
+		select quoOriginal, --报价单金额
+		handItemOriginal, --基础项目
+		mainItemOriginal, --主材项目
+		manageOriginal, --管理费
+		designOriginal, --设计费
+		countPrivilege, --合同优惠金额
+		handItemPrivilege, --基础项目优惠
+		mainItemPrivilege, --主材项目优惠
+		managePrivilege, --管理费优惠
+		designPrivilege, --设计费优惠
+		otherPrivilege, --其他优惠
+		countContract, --实签合同金额
+		handContract, --基础项目
+		mainContract, --主材项目
+		manageContract, --管理费
+		designContract, --设计费
+		countUdItem, --增减项金额
+		handUdItem, --基础项目
+		mainUdItem, --主材项目
+		manageUdItem, --管理费
+		designUdItem, --设计费
+		countAfterPrivilege, --后期优惠金额
+		handItemAfterPrivilege, --基础优惠
+		mainItemAfterPrivilege, --主材优惠
+		manageAfterPrivilege, --管理费优惠
+		designAfterPrivilege, --设计费优惠
+		otherAfterPrivilege, --其他优惠
+		countTotalAmount, --竣工结算金额
+		handTotal, --基础项目
+		mainTotal, --主材项目
+		manageTotal, --管理费
+		designTotal --设计费
+		from v_total_registercount rc
+		where rc.reg_id = #{customer_id}
+	</select>
+	<!-- 查询合同优惠详情 -->
+	<select id="listContractDiscount" resultType="ContractDiscount"
+		parameterType="map">
+
+		select t1.DISCOUNT_ITEM, --优惠项目
+		t1.DISCOUNT_TYPE, --优惠类型
+		(select dd.LIST_DICTIONARY_NAME
+		FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
+		WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
+		AND dm.DICTIONARY_NO = 'yhk'
+		AND dd.LIST_DICTIONARY_VALUE = t1.DISCOUNT_TYPE
+		AND dm.BISINESS_ID = #{bisiness_id}) as DISCOUNT_TYPE_NAME, --优惠类型名称
+		t1.DISCOUNT_MODE, --优惠方式
+		(SELECT dd.LIST_DICTIONARY_NAME
+		FROM T_PUB_LISTDICTIONARY dd, T_PUB_DICTIONARY dm
+		WHERE dd.DICTIONARY_ID = dm.DICTIONARY_ID
+		AND dm.DICTIONARY_NO = 'yhkd'
+		AND dd.LIST_DICTIONARY_VALUE = t1.DISCOUNT_MODE
+		AND dm.BISINESS_ID = #{bisiness_id}) as DISCOUNT_MODE_NAME,
+		t1.DISCOUNT_CONTENT, --优惠内容
+		t1.ITEM_VALUE, --项目标价
+		t1.ITEM_COST --项目成本
+		from T_SAAS_CONTRACT_DISCOUNTDETAIL t1
+		where t1.DISCOUNT_FLAG='0' --合同期内优惠
+		--and t1.DISCOUNT_IS_USEED='1' --已使用
+		and t1.FORMAL_CONTRACT_ID = #{formal_contract_id}
+		order by t1.ADD_TIME desc
+
+	</select>
+	<!-- 查询客户交款情况-->
+  	<parameterMap id="paymentParam" type="map">
+        <parameter property="customer_id" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="bisiness_id" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+        <parameter property="result" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="paymentMap"/>
+    </parameterMap>
+    <resultMap type="ContractPayment" id="paymentMap">
+    	<id column="gat_order" property="id"/>  
+        <result column="contractMoney" property="contractMoney"/> 
+        <result column="payMoney" property="payMoney"/> 
+        <result column="noPayMoney" property="noPayMoney"/> 
+        <result column="gat_item" property="gatItem"/> 
+    </resultMap>  
+	
+	<select id="listContractPayment" statementType="CALLABLE" parameterMap="paymentParam">  
+		<![CDATA[  
+		    {call PR_FINANCE_COLLECTION(?,?,?)}  
+		]]>  
+	</select> 
+	<!-- 基础明细结算 -->
+	 <select id="listBaseInventory" resultType="BaseInventory"
+		parameterType="map">
+	select basName,
+       basunit,
+       baseprice,
+       budgetcount,
+       basecount,
+       baseprice * budgetcount as contraceprice,
+       baseprice * basecount as changeprice,
+       baseprice * (budgetcount + basecount) as practicalprice
+  from (select tt.basName,
+               tt.basStandard,
+               tt.basUnit,
+               trim(tt.basPrice) as baseprice,
+               sum(decode(tt.basmode, '0', tt.bascount, '1', 0)) as budgetcount,
+               sum(decode(tt.basmode, '1', tt.bascount, '0', 0)) as basecount
+          from (select t.bas_name as basname,
+                       t.bas_standard as basstandard,
+                       t.bas_unit as basunit,
+                       t.bas_count as bascount,
+                       '0' as basmode,
+                       t.bas_price as basprice
+                  from t_saas_budget_basic t
+                 where t.bas_data_flag = '1'
+                   and t.quo_id = #{quo_id}
+                   and t.bisiness_id = #{bisiness_id}
+                union all
+                select u.udt_name,
+                       u.udt_standard,
+                       u.udt_unit,
+                       u.udt_count,
+                       '1' as basmode,
+                       u.udt_price
+                  from t_saas_budget_updowntemp u
+                 where u.udt_data_flag = '1'
+                   and u.bisiness_id = #{bisiness_id}
+                   and u.ud_id in
+                       (select up.ud_id
+                          from t_saas_budget_updownitem up
+                         where up.quo_id = #{quo_id})) tt
+         group by tt.basname, tt.basstandard, tt.basunit, trim(tt.basprice)
+         order by trim(tt.basprice) desc)
+
+	</select>
+	<!-- 设计费等 -->
+	<select id="getBudget" resultType="BudgetPrice"	parameterType="map">
+	select t.quo_design_cost,
+       t.quo_manage_cost,
+       t.quo_transport_cost,
+       t.quo_wastage_cost,
+       t.quo_clena_cost
+	  from t_saas_budget_quotation t
+	 where t.quo_id = #{quo_id}
+	   and t.bisiness_id = #{bisiness_id}
+
+	</select>
+	<!-- 设计费等增减项 -->
+	<select id="getBudgetupdown" resultType="Budgetupdown" parameterType="map">
+	select decode(sum(u.ud_design_cost), null, 0,sum(u.ud_design_cost)) as ud_design_cost,
+       decode(sum(u.udt_manage_cost), null, 0,sum(u.udt_manage_cost)) as udt_manage_cost,
+       decode(sum(u.udt_transport_cost), null, 0,sum(u.udt_transport_cost)) as udt_transport_cost,
+       decode(sum(u.udt_wastage_cost), null, 0,sum(u.udt_wastage_cost)) as udt_wastage_cost,
+       decode(sum(u.udt_clena_cost), null, 0,sum(u.udt_clena_cost)) as udt_clena_cost
+  from t_saas_budget_updownitem u
+ where u.quo_id = #{quo_id}
+   and u.bisiness_id = #{bisiness_id}
+	</select>
+	<!-- 主材结算清单 -->
+	 <select id="listMaterialInventory" resultType="MaterialInventory"
+		parameterType="map">
+	select materialSort,
+       materialBrand,
+       materialName,
+       materialSpec,
+       materialModel,
+       materialUnit,
+       materialSalePrice,
+       budgetcount,
+       materialcount,
+       materialSalePrice * budgetcount as contractPrice,
+       materialSalePrice * materialcount as changePrice,
+       materialSalePrice * (budgetcount + materialcount) as practicalPrice
+  from (select (select p.LIST_DICTIONARY_NAME
+                  from T_PUB_LISTDICTIONARY p
+                 where p.bisiness_id = #{bisiness_id}
+                   and p.dictionary_no = 'materialSort'
+                   and p.list_dictionary_id = tt.materialSort) as materialSort,
+               tt.materialBrand,
+               tt.materialName,
+               (select p.LIST_DICTIONARY_NAME
+                  from T_PUB_LISTDICTIONARY p
+                 where p.bisiness_id = #{bisiness_id}
+                   and p.dictionary_no = 'materialUnit'
+                   and p.list_dictionary_value = tt.materialUnit) as materialUnit,
+               tt.materialType,
+               tt.materialSeries,
+               tt.materialSpec,
+               tt.materialModel,
+               trim(tt.materialSalePrice) as materialSalePrice,
+               sum(decode(tt.basmode, '0', tt.materialcount, '1', 0)) as budgetcount,
+               sum(decode(tt.basmode, '1', tt.materialcount, '0', 0)) as materialcount
+          from (select t.mpro_sort as materialsort,
+                       t.mpro_brand as materialbrand,
+                       t.mpro_name as materialname,
+                       t.mpro_unit as materialunit,
+                       '01' as materialtype,
+                       t.mpro_series as materialseries,
+                       t.mpro_spec as materialspec,
+                       t.mpro_model as materialmodel,
+                       t.mpro_sale_price as materialsaleprice,
+                       nvl(t.mpro_count, 0) as materialcount,
+                       '0' as basmode
+                  from t_saas_budget_mainproject_temp t
+                 where t.mpro_dataflag = '1'
+                   and t.mpro_type = '21'
+                   and t.quo_id = #{quo_id}
+                   and t.bisiness_id = #{bisiness_id}
+                union all
+                select u.udm_sort,
+                       u.udm_brand,
+                       u.udm_name,
+                       u.udm_unit,
+                       '01',
+                       u.udm_series,
+                       u.udm_spec,
+                       u.udm_model,
+                       u.udm_sale_price,
+                       u.udm_count,
+                       '1' as basmode
+                  from t_saas_budget_updownmain u
+                 where u.udm_dataflag = '1'
+                   and u.bisiness_id = #{bisiness_id}
+                   and u.ud_id in
+                       (select up.ud_id
+                          from t_saas_budget_updownitem up
+                         where up.quo_id = #{quo_id})) tt
+         group by tt.materialsort,
+                  tt.materialbrand,
+                  tt.materialname,
+                  tt.materialunit,
+                  tt.materialtype,
+                  tt.materialseries,
+                  tt.materialspec,
+                  tt.materialmodel,
+                  trim(tt.materialsaleprice)
+         order by tt.materialsort, tt.materialbrand, tt.materialname)
+
+
+	</select>
 </mapper>

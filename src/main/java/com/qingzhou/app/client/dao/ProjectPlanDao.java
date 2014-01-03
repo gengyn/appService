@@ -1,10 +1,13 @@
 package com.qingzhou.app.client.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import com.qingzhou.app.client.domain.MainDetail;
 import com.qingzhou.app.client.domain.ProjectPhoto;
 import com.qingzhou.app.client.domain.ProjectPlanDetail;
 import com.qingzhou.app.client.domain.RestProjectPhoto;
+import com.qingzhou.app.client.domain.BaseDetail;
 import com.qingzhou.core.dao.MyBatisDao;
   
 @MyBatisDao
@@ -34,5 +37,18 @@ public interface ProjectPlanDao {
 	 * @return
 	 */
 	public int getLeadDay(ProjectPlanDetail projectPlanDetail);
+	
+	/**
+	 * 查询基础明细
+	 * @param baseDetail
+	 * @return
+	 */
+	public List<BaseDetail>listBaseDetail(Map<String,String> conditionMap);
+	/**
+	 * 查询主材明细
+	 * @param conditionMap
+	 * @return
+	 */
+	public List<MainDetail>listMainDetail(Map<String,String> conditionMap);
 
 }

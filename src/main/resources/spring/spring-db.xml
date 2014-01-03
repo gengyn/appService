@@ -14,7 +14,7 @@
 		<property name="username" value="#{appService['jdbc.username']}" />
 		<property name="password" value="#{appService['jdbc.password']}" />
 		<property name="initialSize" value="5" /> <!-- 初始连接数 -->
-		<property name="maxActive" value="600" /> <!-- 最大连接数.设置为非正数表示无限制 -->
+		<property name="maxActive" value="200" /> <!-- 最大连接数.设置为非正数表示无限制600 -->
 		<property name="maxIdle" value="20" /> <!-- 最大空闲连接数,如果超出此数量的空闲连接将被释放.设置非正数表示无限制 -->
 		<property name="removeAbandoned" value="true" /> <!-- 回收被遗弃的数据库连接 -->
 		<property name="removeAbandonedTimeout" value="1800" /> <!-- 连接超过多长时间(秒)将被标记为被遗弃 -->
